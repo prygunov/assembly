@@ -1,0 +1,916 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Низкоуровневое програмирование</title>
+	<meta name="keywords" content="программирование, BIOS, INT, INT 15, реальный режим, ассемблер, 16bit" />
+	<meta name="description" content="Низкоуровневое программирование: Прерывания БИОС: INT 15" />
+</head>
+<body>
+
+	<a href="../../index.htm">Главная</a> - <a href="../index.htm"> Реальный режим </a> - <a href="int.htm">Прерывания Bios</a> - <b>INT 15h: Дополнительные функции.</b><br />
+	<h2>INT 15h: Дополнительные функции.</h2>
+	<div style="font-size: 13pt">Данное прерывание реализует несколько наборов API</div><br/>
+	<h3>Оглавление</h3>
+	<ul>
+		<li><a href="int15.htm#cassete">Кассетный API</a></li>
+		<li><a href="int15.htm#system">Системный API</a></li>
+		<li><a href="int15.htm#mem">Сервис памяти</a></li>
+		<li><a href="int15.htm#apm">APM API</a></li>
+		<li><a href="int15.htm#oth">Прочие функции</a></li>
+		<li>EISA API (раздел ещё не добавлен)</li>
+		<li>Функции, специфичные для спецификации Embedded BIOS (раздел ещё не добавлен)</li><!-- функции Axh D0 E0  -->
+	</ul>
+	<a name=cassete><h3>Кассетный API</h3></a>
+<table border=1 width=100%><tr><td>AH</td><td>Функция</td></tr><tr><td valign=top>
+  00h</td><td>Включить мотор кассетного привода.<br /><br />
+	<b>Выход:</b><br />
+	AH!=86 и AH!=80, иначе касетный привод не найден.</td></tr><tr><td colspan=2 align="center">
+  <a href="15/cas.htm">прочие кассетные функции</a></td></tr>
+</table>
+<br/><br/>
+<a name=system><h3>Системный API</h3></a>
+<table border=1 width=100%><tr><td>AH</td><td>Функция</td></tr><tr><td valign=top>
+24h</td><td>Линия A20<br/><br/>
+	<b>Вход:</b><br />
+	AL:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1 - Включить линию A20<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;2 - Выключить линию A20<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;3 - узнать, можно ли переключить линию A20 через порт 92h<br/><br/>
+	<b>Выход:</b><br />
+	При ошибке установлен флаг переноса и AH=86<br />
+	Если в AL было переданно значение 3, то в BL==2 означает, что можно переключить линию A20 через порт 92h<br/><br/>
+	<b>Примечание:</b><br />
+	Эта функция мало где описана, и, вероятно, поддерживается не всеми БИОСами</td></tr><tr><td valign=top>
+<a name="4F">4Fh</a></td><td>Внутренняя функция<br/>
+	Эта функция вызывается обработчиком прерывания 9h (прерывание от клавиатуры). Точное назначение функции неизвестно. Реализация зависит от разработчиков БИОСа.</td></tr><tr><td valign="top">
+80h</td><td>Открыть устройство.<br />
+	По умолчанию, ничего не делает (зарезервированна для многозадачных ОС реального режима)<br /><br/>
+	<b>Вход:</b><br />
+	BX = ID устройства<br />
+	CX = ID процесса</td></tr><tr><td valign=top>
+  81h</td><td>Закрыть устройство.<br />
+	По умолчанию, ничего не делает (зарезервированна для многозадачных ОС реального режима)<br /><br/>
+	<b>Вход:</b><br />
+	BX = ID устройства<br />
+	CX = ID процесса</td></tr><tr><td valign=top>
+  82h</td><td>завершить программу устройства.<br />
+	По умолчанию, ничего не делает (зарезервированна для многозадачных ОС реального режима)<br /><br/>
+	<b>Вход:</b><br />
+	BX = ID устройства</td></tr><tr><td valign=top>
+  83h</td><td>Ждать события. Запустить таймер и установить флаг по истечении интервала.<br />
+	<font color=red><b>Только AT-совместимые компьютеры</b></font><br/><br/>
+	<table border=1 width=100%><tr><td>AL</td><td>Функция</td></tr><tr><td valign=top>
+	0</td><td>Задать интервал и запустить таймер<br/><br/>
+		<b>Вход:</b><br />
+		ES:BX - адрес байта, в котором будет установлен седьмой бит по истечении заданного времени<br/>
+		CX - время ожидания в микросекундах (старшая часть)<br/>
+		DX - время ожидания в микросекундах (младшая часть)<br/><br/>
+		<b>Выход:</b><br />
+		AH = 83h (может так же равняться 80h, что означает неверный код функции или 86h, что означает, что функция не поддерживается)<br/>
+		AL - статус (если 0, то установить таймер не удалось, т.к. уже установлен другой таймер)<br/><br/>
+		<b>Примечание:</b><br />
+		На большинстве систем время ожидания округляедся до кратного 977 милисекундам<br/>
+		На IBM PC/AT с биосом, датированным 1984/1/10 значение AL игнорируется, и всегда вызывается эта подфункция</td></tr><tr><td valign=top>
+	1</td><td>Отменить ожидание события<br/><br/>
+		<b>Выход:</b><br />
+		AH = 83h (может так же равняться 80h, что означает неверный код функции или 86h, что означает, что функция не поддерживается)<br/>
+		AL = 0<br/><br/>
+		<b>Примечание:</b><br />
+		На IBM PC/AT с биосом, датированным 1984/1/10 значение AL игнорируется, и всегда вызывается подфункция 0</td></tr>
+	</table>	
+	</td></tr><tr><td valign=top>
+  84h</td><td>Обеспечение джойстика (вероятно, подключённого через стандартный (и безнадёжно устаревший) игровой порт).<br/><br/>
+	<b>Вход:</b><br />
+	DX = код подфункции:<br/>
+	<table width=100% border=1><tr><td>DX</td><td></td></tr><tr><td valign=top>
+	0</td><td>Читать текущие переключатели<br/><br/>
+		<b>Выход:</b><br />
+		AL = значения переключателей (если равно нулю, то джойстик не найден)</td></tr><tr><td valign=top>
+	1</td><td>Читать входы X,Y джойстика<br/><br/>
+		<b>Выход:</b><br />
+		AX = джойстик 'A', значение X (горизонталь)<br/>
+		BX = джойстик 'A', значение Y (вертикаль)<br/>
+		CX = джойстик 'B', значение X (горизонталь)<br/>
+		DX = джойстик 'B', значение Y (вертикаль)<br/>
+		Если джойстик не найден, то AX=BX=CX=DX=0</td></tr>
+	</table>
+	</td></tr><tr><td valign=top>
+  85h</td><td>клавиша SysReq.вызывается прерыванием <a href="int9.htm">INT 09H</a> при нажатии и отпускании клавиши SysReq.<br/>
+	<font color=red><b>Только AT-совместимые компьютеры</b></font><br/>
+	По умолчанию, ничего не делает (зарезервированна для многозадачных ОС реального режима)<br /><br/>
+	<b>Вход:</b><br />
+	AL = 0: SysReq нажата ('make')<br/>
+	AL = 1: SysReq отпущена ('break')</td></tr><tr><td valign=top>
+  86h</td><td>Ждать.<br/>
+	<font color=red><b>Только AT-совместимые компьютеры</b></font><br/>
+	Циклит с разрешенными прерываниями до истечения интервала времени.<br/><br/>
+    <b>Вход:</b><br />
+	CX - время ожидания в микросекундах (старшая часть)<br/>
+	DX - время ожидания в микросекундах (младшая часть)<br/><br/>
+	<b>Примечание:</b><br/>
+	На большинстве систем время ожидания округляедся до кратного 977 милисекундам<br/>
+	Не реккомендуется указывать в качестве задержки значения меньше 1000 микросекунд (3e8h)</td></tr><tr><td valign=top>
+  87h</td><td>Переслать блок extended-памяти.<br/>
+	<font color=red><b>Только AT-совместимые компьютеры с процессором 286 и выше</b></font><br/><br/>
+    <b>Вход:</b><br />
+	CX = размер блока в словах (максимум 8000h т.е. 64 кб.)<br/>
+	ES:SI = GDT<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db 16 dup (0) 16 пустых байтов<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;размер источника в байтах (2*[сх]+1)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;младшая часть адреса источника<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;старшая часть адреса источника<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db 93h &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;разрешены чтение и запись<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;пустое (резервное) слово<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;размер приемника в байтах (2*[сх]+1)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;младшая часть адреса приемника<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;старшая часть адреса приемника<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db 93h &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;разрешены чтение и запись<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;пустое (резервное) слово<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db 16 dup (0) 16 пустых байтов<br/><br/>
+	<b>Выход:</b><br />
+	AH - статус:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;0 - успешно<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1 - ошибка памяти<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;2 - во время переключения возникло исключение.<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;3 - переключение линии A20 не удалось<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;80h - неиизвестная команда<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;86h - неизвестная функция<br /><br />
+	<b>Примечание:</b><br/>
+	Прерывания могут быть запрещены в процессе перемещения данных.<br />
+	Спецификация Embedded BIOS 4.1 утверждает, что байты 8-10h в GDT должны корректно указывать на GDT, т.е. должны быть заполнены аналогично частям источника (10h-18h) и приёмника(18h-20h)</td></tr><tr><td valign=top>
+  <a name=88>88h</a></td><td>Размер extended-памяти.(не более 64Мб)<br/>
+	<font color=red><b>Только AT-совместимые компьютеры</b></font><br/><br/>
+	<b>Выход:</b><br />
+	AX = число непрерывных 1Kб блоков сверх 1Mб</td></tr><tr><td valign=top>
+  89h</td><td>Войти в режим Protected (286 Virtual memory). это полезная штука, если вы не знаете, что это за зверь - Protected Mode i286.<br/><br/>
+    <b>Вход:</b><br />
+	ES:SI => 8-элементная таблица глобальных дексрипторов (GDT) (ниже)<br/>
+	BH = смещение в IDT начала первых 8 аппаратных прерываний (IRQ)<br/>
+	BL = смещение в IDT начала вторых 8 аппаратных прерываний (IRQ)<br/><br/>
+	<b>Выход:</b><br />
+	AH - статус:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;0 - успешно<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;1 - ошибка памяти<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;2 - во время переключения возникло исключение.<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;3 - переключение линии A20 не удалось<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;80h - неиизвестная команда<br />
+	&nbsp;&nbsp;&nbsp;&nbsp;86h - неизвестная функция<br />
+	Если не было ошибок, то все сегментные регистры изменяются. AX и BP теряются. 80286 входит в режим Protected без прямого выхода в режим Real.<br /><br />
+	<b>Примечание:</b><br/>
+    Cтруктура GDT:<br/>
+	ES:[SI]+00h &nbsp;фиктивный дескриптор &nbsp;&nbsp;&nbsp;&nbsp;(все нули)<br/>
+	ES:[SI]+08h &nbsp;дескриптор этой GDT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(инициализирует пользователь)<br/>
+	ES:[SI]+10h &nbsp;дескриптор для IDT &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(инициализирует пользователь)<br/>
+	ES:[SI]+18h &nbsp;дескриптор для caller DS (инициализирует пользователь)<br/>
+	ES:[SI]+20h &nbsp;дескриптор для caller ES (инициализирует пользователь)<br/>
+	ES:[SI]+28h &nbsp;дескриптор для caller SS (инициализирует пользователь)<br/>
+	ES:[SI]+30h &nbsp;дескриптор для caller CS (инициализирует пользователь)<br/>
+	ES:[SI]+38h &nbsp;временный BIOS CS &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(все нули)<br/><br/>
+	Структура Дескриптора:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw ? - размер в байтах<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;dw ? - младшая часть адреса начала<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db ? - старшая часть адреса начала<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db ? - права доступа:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 0-3 : Тип сегмента:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Для системных десткрипторов:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 - резерв<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1 - свободный 16-битный TSS<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 - LDT<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3 - занятый 16-битный TSS<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4 - 16-битный шлюз вызова<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5 - Шлюз задачи<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6 - 16-битный шлюз прерывания<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7 - 16-битный шлюз ловушки<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8 - резерв<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9 - свободный 32-битный TSS (i386+)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10 - резерв<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11 - занятый 32-битный TSS (i386+)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12 - 32-битный шлюз вызова (i386+)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;13 - резерв<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;14 - 32-битный шлюз прерывания (i386+)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15 - 32-битный шлюз ловушки (i386+)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Для десткрипторов приложений:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;бит 0 - было обращение к сегменту<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;бит 1 - для дескриптора данных: доступ на запись, для дескриптора кода: доступ на чтение<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;бит 2 - для дескриптора данных: запись с конца, для дескриптора кода: conforming<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;бит 3 = 0 : данные; = 1 : код<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 4 : Тип дескриптора (установлен -> для приложений; сброшен -> системный)<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 5-6 : Уровень привилегий<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 7 : Установлен -> сегмент находится в оперативной памяти<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db ? - на i286 резерв, на i386+ расширенные права доступа:
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 0-3 : старшие 4 бита лимита сегмента<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 4 : доступность<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 5 : резерв<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 6 : 16-битный, если сброшен, 32-битный если установлен<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Биты 7 : размерность: блоками по 4Кб, если установлен; байтами, если сброшен<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;db ? - на i286 резерв, на i386+ старшие 8 бит начала сегмента
+	</td></tr><tr><td valign=top>
+  <a name=90>90h</a></td><td>Цикл занятости устройства.<br/>
+	<font color=red><b>Только AT-совместимые компьютеры</b></font><br/>
+	По умолчанию, ничего не делает (зарезервированна для многозадачных ОС реального режима)<br /><br/>
+    <b>Вход:</b><br />
+	AL = код типа устройства<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;00h = твердый диск<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;01h = дискета<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;02h = клавиатура<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;03h = PS/2 мыш<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;21h = ожидание ввода с клавиатуры <font color=red><b>Работает не везде</b></font><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;80h = сеть<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;FBh = звук<font color=red><b>Работает не везде</b></font><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;FCh = перезапуск диска<font color=red><b>Работает не везде</b></font><br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;FDh = запуск мотора дискеты<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp;FEh = принтер<br/>
+	ES:BX => управляющий блок для кодов 80h - BFh (по иным сведеньям 80h - FFh)<br/><br/>
+	<b>Примечание:</b><br />
+	Здесь описанны вход и выход, которые должен ожидать обработчик этой функции.<br />
+	Установленный флаг CF должен означать, что истёкло время ожидания</td></tr><tr><td valign=top>
+  91h</td><td>завершить прерывание.<br/>
+	<font color=red><b>Только AT-совместимые компьютеры</b></font><br/>
+	По умолчанию, ничего не делает (зарезервированна для многозадачных ОС реального режима)<br /><br/>
+    <b>Вход:</b><br />
+	AL = код типа устройства (см. подфункцию <a href="int15.htm#90">90H</a>)<br/>
+	&nbsp;&nbsp;&nbsp;= 00h - 7Fh: последовательно используемые устройства<br/>
+	&nbsp;&nbsp;&nbsp;= 80h - BFh: реентерабельные устройства (ES:BX => пакет данных)<br/>
+	&nbsp;&nbsp;&nbsp;= C0h - FFh: не доступны через эту функцию<br/><br/>
+	<b>Примечание:</b><br />
+	Здесь описанны вход и выход, которые должен ожидать обработчик этой функции.</td></tr><tr><td valign=top>
+  <a name=c0>C0h</a></td><td> Адрес таблицы конфигурации (SCT)<br /><br/>
+	<b>Выход:</b><br />
+	ES:BX = адрес таблицы конфигурации, таблица находится в ПЗУ BIOS;<br />
+	&nbsp;&nbsp;CF = 0 и AH = 0 при успешном вызове прерывания;<br />
+	&nbsp;&nbsp;CF = 1 и AH=86h или AH=80h если данная версия BIOS не поддерживает функцию C0h.<br/><br/>
+	<b>Примечание:</b><br />
+	формат таблицы:<br />
+	<table border=1 width=100%>
+	<tr><td>Смещение</td><td>Размер</td><td>Описание</td></tr><tr><td valign=top>
+	 00h</td><td>2 байта</td><td>размер таблицы за исключением этого поля</td></tr><tr><td valign=top>
+	 02h</td><td>1 байт</td><td>код модели компьютера</td></tr><tr><td valign=top>
+	 03h</td><td>1 байт</td><td>суб-код модели компьютера</td></tr><tr><td valign=top>
+	 04h</td><td>1 байт</td><td>номер ревизии BIOS минус 1</td></tr><tr><td valign=top>
+	 05h</td><td>1 байт</td><td>
+	    <table border=1 width=100%><tr><td>
+	    бит</td><td>Описание</td></tr><tr><td valign=top>
+	    0</td><td>В системе установлена двойная шина (ISA + Micro Chanel)</td></tr><tr><td valign=top>
+	    1</td><td>В системе установлена шина Micro Chanel, если установлен, иначе - ISA</td></tr><tr><td valign=top>
+	    2</td><td>Биос имеет дополнительную область данных (EBDA)</td></tr><tr><td valign=top>
+	    3</td><td>Функция 41h прерывания 15h поддерживается</td></tr><tr><td valign=top>
+	    4</td><td>Прерывание 09h вызывает <a href="int15.htm#4F">функцию 4Fh прерывания 15h</a></td></tr><tr><td valign=top>
+	    5</td><td>Присутствуют часы реального времени (RTC)</td></tr><tr><td valign=top>
+	    6</td><td>Установлен второй контроллер прерывания 8259 (в режиме каскадирования через IRQ 2, т.е. стандартная конфигурация)</td></tr><tr><td valign=top>
+	    7</td><td>Третий канал DMA занят BIOS</td></tr>
+	    </table>
+	 </td></tr><tr><td valign=top>
+	 06h</td><td>1 байт</td><td>
+	    <table border=1 width=100%><tr><td>
+	    бит</td><td>Описание</td></tr><tr><td valign=top>
+	    0</td><td>Резерв</td></tr><tr><td valign=top>
+	    1</td><td>Поддерживается потоковая передача данных</td></tr><tr><td valign=top>
+	    2</td><td>Используется НЕ 8042 контроллер клавиатуры</td></tr><tr><td valign=top>
+	    3</td><td>Функция C8h прерывания 15h поддерживается</td></tr><tr><td valign=top>
+	    4</td><td>Функция <a href="int15.htm#C7">C7h прерывания 15h поддерживается</a></td></tr><tr><td valign=top>
+	    5</td><td>Функция C6h прерывания 15h поддерживается</td></tr><tr><td valign=top>
+	    6</td><td>Функция <a href="int16.htm#9">09 прерывания 16h</a> поддерживается<br /><font color=red>Некорректно устанавливается некоторыми БИОС</font></td></tr><tr><td valign=top>
+	    7</td><td>Присутствует 32-х битный контроллер DMA</td></tr>
+	    </table>
+	 </td></tr><tr><td valign=top>
+	 07h</td><td>1 байт</td><td>
+	    <table border=1 width=100%><tr><td>
+	    бит</td><td>Описание</td></tr><tr><td valign=top>
+	    0</td><td>SCSI поддерживается в IML</td></tr><tr><td valign=top>
+	    1</td><td>IML система</td></tr><tr><td valign=top>
+	    2</td><td>Подключена информационная панель</td></tr><tr><td valign=top>
+	    3</td><td>Присутствует SCSI контроллер</td></tr><tr><td valign=top>
+	    4</td><td>POST поддерживает включение\выключение ROM-TO-RAM</td></tr><tr><td valign=top>
+	    5</td><td>Резерв</td></tr><tr><td valign=top>
+	    6</td><td>Резерв</td></tr><tr><td valign=top>
+	    7</td><td>Резерв</td></tr>
+	    </table>
+	 </td></tr><tr><td valign=top>
+	 08h</td><td>1 байт</td><td>
+	    <table border=1 width=100%><tr><td>
+	    бит</td><td>Описание</td></tr><tr><td valign=top>
+	    0</td><td>POST поддерживает POSTEXT</td></tr><tr><td valign=top>
+	    1</td><td>система поддерживает разделение памяти на отметке 16Mб</td></tr><tr><td valign=top>
+	    2</td><td>Резерв</td></tr><tr><td valign=top>
+	    3-5</td><td>001 - ABIOS НЕ поддерживается<br />010 - ABIOS поддерживается из ROM<br />011 - ABIOS поддерживается, но необходима загрузка в RAM.<br />111 - ABIOS присутствует<br /></td></tr><tr><td valign=top>
+	    6</td><td>В системе присутствует EEPROM</td></tr><tr><td valign=top>
+	    7</td><td>(занято IBM)</td></tr>
+	    </table>
+	 </td></tr><tr><td valign=top>
+	 09h</td><td>1 байт</td><td>
+	    <table border=1 width=100%><tr><td>
+	    бит</td><td>Описание</td></tr><tr><td valign=top>
+	    0</td><td>flash EPROM BIOS</td></tr><tr><td valign=top>
+	    1</td><td>Система имеет расширеный режим мыши.</td></tr><tr><td valign=top>
+	    4-2</td><td>Резерв</td></tr><tr><td valign=top>
+	    5-7</td><td>(занято IBM)</td></tr>
+	    </table>
+	 </td></tr><tr><td valign=top>
+	 0Ah - далее</td><td>&nbsp;</td><td><a href="http://biosprog.narod.ru/real/ints/15\spbios.htm">область данных, смысл которых зависит от производителя.</a></td></tr>
+	</table>
+	Некоторые биосы используют не все байты возможностей. К примеру, в Phoenix BIOS 4 rev. 6 User manual байты со смещёнием 7 и 8 отмечены как зарезервированные.
+	</td></tr><tr><td valign=top>
+  C1h</td><td> Получить сегмент дополнительной области данных BIOS (EBDA)<br/><br/>
+	<b>Выход:</b><br />
+	Если CF установлен: ошибка (AH=80h или AH=86h - данная функция не поддерживается)<br/>
+	Если CF сброшен: ES - сегмент EBDA
+	</td></tr><tr><td valign=top>
+  C2h</td><td> BIOS - интерфейс указывающего устройства (мышь)<br/>
+	<table border=1 width=100%><tr><td>AL</td><td>Функция</td></tr><tr><td valign=top>
+	  0</td><td>Включить/Выключить<br/><br/>
+		<b>Вход:</b><br />
+		BH = 00 - выключить<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;= 01 - включить<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен: ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;02h - неверный параметр<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.
+		</td></tr><tr><td valign=top>
+	  1</td><td>Сбросить мышь<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен: ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.<br/>
+		BH = ID устройства(обычно нуль)<br/>
+		BL = код, возврашаемый устройством при перенастройке. (AAh - большинство PS/2 мышей)<br/><br/>
+		<b>Примечания:</b><br/>
+		Параметры по умолчанию:<br/>
+		Выключено<br/>
+		Частота - 100 Гц<br/>
+		Чуствительность - 4 отсечки на миллиметр<br/>
+		Масштаб 1:1<br/>
+		Рекомендуется вызывать при завершении программы если использовались какие-либо из подфункций функции C2h<br/>
+		На некоторых BIOS возврат BL не предусмотрен
+		</td></tr><tr><td valign=top>
+	  2</td><td>Установить частоту<br/><br/>
+		<b>Вход:</b><br />
+		BH - чатота:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;0 - 10 Гц<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;1 - 20 Гц<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;2 - 40 Гц<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;3 - 60 Гц<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;4 - 80 Гц<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;5 - 100 Гц<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;6 - 200 Гц<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен: ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.
+		</td></td><tr><td valign=top>
+	  3</td><td>Установить чуствительность<br/><br/>
+		<b>Вход:</b><br />
+		BH - чуствительность:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;00 - одна отсечка на милиметр<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01 - две отсечки на милиметр<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;02 - 4 отсечки на милиметр<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03 - 8 отсечек на милиметр<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен:  ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.
+		</td></tr><tr><td valign=top>
+	  04</td><td>Получить ID<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен: ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль
+		BH = ID устройства
+		</td></tr><tr><td valign=top>
+	  05</td><td> Инициализация<br/><br/>
+		<b>Вход:</b><br />
+		BH - размер пакета данных (от 1 до 8, в байтах)<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен:  ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.<br /><br />
+		<b>Примечания:</b><br/>
+		Параметры устанавливаются следующим образом:<br/>
+		Выключено<br/>
+		Частота - 100 Гц<br/>
+		Чуствительность - 4 отсечки на миллиметр<br/>
+		Масштаб 1:1
+		</td></tr><tr><td valign=top>
+	  06</td><td> Дополнительные возможности
+		<table border=1 width=100%><tr><td>BH</td><td>Подфункция</td></tr><tr><td valign=top>
+		  0</td><td> Получить параметры устройства<br/><br/>
+			<b>Выход:</b><br />
+			BL - статус:<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 0 - нажата правая клавиша<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 1 - нажата средняя клавиша //не факт, что это действительно так, сам не проверял. В RBIL утверждается, что это поле зарезервированно<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 2 - нажата левая клавиша<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 3 - резерв<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 4 - масштаб 0 - 1:1, 1 - 2:1  (в некоторых источниках указано строго наоборот, что верно - не знаю)<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 5 - состояние 0 - выключено, 1 - включено<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 6 - 0 - потоковый режим, 1 - удалённый (remote) режим<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;бит 7 - резерв<br/>
+			CL - чуствительность:<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;00 - одна отсечка на милиметр<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;01 - две отсечки на милиметр<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;02 - 4 отсечки на милиметр<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;03 - 8 отсечек на милиметр<br/>
+			DL - частота:<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;0Ah - 10 Гц<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;14h - 20 Гц<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;28h - 40 Гц<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;3Ch - 60 Гц<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;50h - 80 Гц<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;64h - 100 Гц<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;C8h - 200 Гц<br/><br/>
+			</td></tr><tr><td valign=top>
+		  02</td><td> Установить масштаб 1:1</td></tr><tr><td valign=top>
+		  03</td><td> Установить масштаб 2:1
+		</td></tr></table><br/>
+		<b>Выход:</b><br />
+		Если CF установлен: ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.
+		</td></tr><tr><td valign=top>
+	  07</td><td> Установить свой обработчик событий<br/><br/>
+		<b>Вход:</b><br />
+		ES:BX - адрес обработчика (если адрес установлн в ноль, то испольуется стандартный обработчик)<br/><br/>
+		<b>Выход:</b><br />
+		Если CF установлен: ошибка <br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;Значения AH в этом случае:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;01h - функция не поддерживается<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;03h - ошибка интерфейса PS/2<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;04h - необходимо повторить операцию<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;05h - отсутствует драйвер мыши<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;80h или 86h - данная функция не поддерживается<br/>
+		Если CF сброшен: успех, AH установлен в ноль.<br/><br/>
+		<b>Примечания:</b><br/>
+		Параметры передаются через стек:<br/>
+		Слово 1 - статус:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 0 - нажата левая клавиша<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 1 - нажата правая клавиша<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 2 - нажата средняя клавиша //не факт, что это действительно так, сам не проверял. В RBIL утверждается, что это поле зарезервированно<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 3 - резерв<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 4 - знак по оси X<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 5 - знак по оси Y<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 6 - переполнение по оси X<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 7 - переполнение по оси Y<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;бит 8-16 - резерв // Возможно, знак и переполнение по оси Z при её наличии?<br/>
+		Слово 2 - старший байт - знак, младший - координата X<br/>
+		Слово 3 - старший байт - знак, младший - координата Y<br/>
+		Слово 4 - обычно ноль, для но в случае если подключена трехкоординатная мышь используется для передачи координаты Z по аналогии со словами 2 и 3
+		</td></tr><tr><td valign=top>
+	  08</td><td> Отправить байт на указывающее устройство</br><br/>
+		<b>Вход:</b><br />
+		BL - отправляемый байт<br/><br/>
+		<b>Примечания:</b><br/>
+		Поддерживается не всеми БИОС.
+		</td></tr><tr><td valign=top>
+	  09</td><td> Получить данные с указывающего устройства</br><br/>
+		<b>Выход:</b><br />
+		BL - Первый считанный байт</br>
+		CL - Второй считанный байт</br>
+		DL - Третий считанный байт<br/><br/>
+		<b>Примечания:</b><br/>
+		Поддерживается не всеми БИОС.
+	  </td></tr></table><br/>
+	<b>Примечания:</b><br/>
+	Для проверки наличия этой функции пользуйтесь функцией <a href="int15.htm#c0">C0h</a>.
+	</td></tr>
+<!-- Добавить функции C3 C4 -->
+</table>
+<br/><br/>
+<a name=mem><h3>Сервис памяти</h3></a>
+<table border=1 width=100%><tr><td>AH</td><td>Функция</td></tr><tr><td valign=top>
+  88h</td><td>Размер "расширенной" памяти<br/><br/>
+	<b>Выход:</b><br />
+	AX - количество килобайт, выше 1 мб.<br/>
+	CF установлен, если произошла ошибка<br />
+	<b>Примечание:</b><br />
+	Часто эта функция исскуственно ограничена границей в 16мб<br/>
+	Многие БИОСы неправильно устанавливают флаг CF, в связи с чем обычно реккомендуется следующий способ проверить наличие этой функции:<br/>
+	<pre>
+	MOV AH, 0x88
+	INT 0x15		; вызываем функцию
+	JC SHORT .ERR	; флаг CF установлен - считаем, что произошла ошибка
+	TEST AX, AX		; размер равный нулю скорее всего ошибочен
+	JE SHORT .ERR
+	CMP AH, 0x86		; этот код соответсвует ошибке "неподдерживаемая функция"
+	JE SHORT .ERR
+	CMP AH, 0x80		; этот код соответсвует ошибке "неправильная командая функция"
+	JE SHORT .ERR
+	; обрабатываем результат
+	</pre>
+	безусловно, при таком подходе мы теряем часть случаев, когда функция исправно работает, зато дойдя до моента обработки результата мы уверены, что функция отработала верно.</td></tr><tr><td valign=top>
+  8Ah</td><td>Размер памяти свыше 64Мб<br/><br/>
+	<b>Выход:</b><br />
+	AX - младшая часть размера памяти<br />
+	DX - старшая часть размера памяти<br />
+	Флаг CF установлен, если функция не поддерживается<br/><br />
+	<b>Примечание:</b><br />
+	Эта функция возвращает количество блоков по 1Кб свыше 64Мб<br/>
+	В некоторых источника эта функция описывается как аналог <a href="int15.htm#DA88">функции DA88h</a>. Вероятно, разные производители БИОСов реализуют её по-разному, в связи с чем не рекомендуется её использовать.</td></tr><tr><td valign=top>
+  <a name="C7">C7h</a></td><td>Карта памяти свыше 1Мб<br/><br/>
+	<b>Вход:</b><br />
+	CS:DI - адрес, куда будет помещана карта памяти<br />
+	Флаг CF установлен при ошибке<br/><br />
+	<b>Примечание:</b><br />
+	Не все БИОСы поддерживают эту функцию<br/>
+	Рекомендуется проверять наличие этой функции с помощью <a href="int15.htm#C0">функции C0h</a><br/>
+	Карта имеет следующий формат:<br/>
+	<table border=1 width=100%><tr><td>Смещение</td><td>Размер</td><td>Описание</td></tr><tr><td valign=top>
+		0</td><td>WORD</td><td>Размер таблицы, за исключением этого слова</td></tr><tr><td valign=top>
+		2</td><td>DWORD</td><td>Количество килобайт логической памяти между 1Мб и 16Мб</td></tr><tr><td valign=top>
+		6</td><td>DWORD</td><td>Количество килобайт логической памяти между 16Мб и 4Гб</td></tr><tr><td valign=top>
+		Ah</td><td>DWORD</td><td>Количество килобайт системной памяти между 1Мб и 16Мб</td></tr><tr><td valign=top>
+		Eh</td><td>DWORD</td><td>Количество килобайт системной памяти между 16Мб и 4Гб</td></tr><tr><td valign=top>
+		12h</td><td>DWORD</td><td>Количество килобайт кэшируемой памяти между 1Мб и 16Мб</td></tr><tr><td valign=top>
+		16h</td><td>DWORD</td><td>Количество килобайт кэшируемой памяти между 16Мб и 4Гб</td></tr><tr><td valign=top>
+		1Ah</td><td>DWORD</td><td>Количество килобайт до начала не системной памяти между 1Мб и 16Мб</td></tr><tr><td valign=top>
+		1Eh</td><td>DWORD</td><td>Количество килобайт до начала не системной памяти между 16Мб и 4Гб</td></tr><tr><td valign=top>
+		22h</td><td>WORD</td><td>Начальный сегмент наибольшего блока памяти в промежутке C0000h-DFFFFh</td></tr><tr><td valign=top>
+		24h</td><td>WORD</td><td>Размер наибольшего блока памяти в промежутке C0000h-DFFFFh</td></tr><tr><td valign=top>
+		26h</td><td>DWORD</td><td>Резерв</td></tr>
+	</table></td></tr><tr><td valign=top>
+  <a name="DA88">DAh</a></td><td>Размер памяти от 1мб до 16мб<br/><br/>
+	<b>Вход:</b><br />
+	AL=88h<br/><br/>
+	<b>Выход:</b><br />
+	AX=0<br />
+	CL, BX - количество килобайт доступной памяти в промежутке от 1мб до 16мб (старшая часть в CL)<br /><br />
+	<b>Примечание:</b><br />
+	Если произошла ошибка - установлен флаг переноса (CF)<br />
+	В большинстве случаев эта функция вернёт размер примерно 14 мб, т.к. в промежутке от 1 мб до 16 мб есть облать, используемая БИОСом.</td></tr><tr><td valign=top>	
+  <a name=e8>E8h</a></td><td>Память
+	<table width=100% border=1><tr><td>AL</td><td>функция</td></tr><tr><td valign=top>
+	01h</td><td>размер extended-памяти.<br/><br/>
+	 <b>Выход:</b><br />
+	 ax = cx - размер сконфигурированный расширенной памяти в килобайтах в промежутке от 1Мб до 16Мб<br/>
+	 bx = dx - размер сконфигурированной расширенной памяти в блоках по 64Кб свыше 16Мб<br/>
+	 Если произошла ошибка - установлен флаг переноса (CF)</td></tr><tr><td valign=top>
+	20h</td><td>Карта памяти разбитая на блоки разных типов. допускает дыры в памяти.<br/><br/>
+	 <b>Вход:</b><br />
+	 edx = 534d4150h ('SMAP');<br/>
+	 ebx - Смещение от начала карты памяти(0 - начать с начала)<br/>
+	 eсx - Размер буфера<br/>
+	 es:di - Адрес буфера для размещения карты памяти<br/><br/>
+	 <b>Выход:</b><br />
+	 eax - 534d4150h ('SMAP')<br/>
+	 ebx - Следующее смещение от начала карты памяти, если = 0, то вся карта передана<br/>
+	 ecx - Количество возвращенных байт<br /><br />
+	 <b>Примечание:</b><br />
+	 Эта функция не включает информацию о области памяти, адресуемой в графеческую карту</td></tr><tr><td valign=top>
+	81h</td><td>Размер extended-памяти.<br/><br/>
+	 <b>Выход:</b><br />
+	 eax = ecx - размер сконфигурированный расширенной памяти в килобайтах в промежутке от 1Мб до 16Мб<br/>
+	 ebx = edx - размер сконфигурированной расширенной памяти в блоках по 64Кб свыше 16Мб<br/>
+	 Если произошла ошибка - установлен флаг переноса (CF)</td></tr></table></td></tr>
+</table>
+<br/><br/>
+<a name=apm><h3>APM API</h3></a><br/>
+Advanced Power Managment (APM) - это старый механизм управления электропитанием компьютера<br/>
+Этот апи реализуется через функцию 53h, т.е. в AH необходимо передавать значение 53h
+<table border=1 width=100%><tr><td>AL</td><td>Функция</td></tr><tr><td valign=top>	 
+  00h</td><td>Проверить наличие APM<br /><br/>
+	<b>Вход:</b><br />
+	BX=0<br /><br />
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то APM не поддерживается и AH - <a href="int15.htm#codesAPM">статус</a>.<br />
+	Иначе:<br />
+	AH - старший номер версии (в коде BCD)<br />
+	AL - младший номер версии (в коде BCD)<br />
+	BX = 504Dh<br />
+	CX :<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 0 : 16-ти битный интерфейс поддерживается<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 1 : 32-х битный интерфейс поддерживается<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 2 : Вызов CPU IDLE снижает скорость процессора<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 3 : APM выключено (disabled)<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 3 : APM отключено (disengaged)<br /><br />
+	<b>Примечание:</b><br />
+	Некоторые старые версии Award BIOS не изменяют значение BX<br />
+	Установленный бит 2 регистра CX означает, что если был вызов CPU IDLE, а сейчас системе требуется полная производительность, то необходимо сделать вызов CPU BUSY.</td></tr><tr><td valign=top>	 
+  <a name="5301">01h</a></td><td>Подключиться к интерфейсу реального режима<br /><br/>
+	<b>Вход:</b><br />
+	BX=0<br /><br />
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br /><br />
+	<b>Примечание:</b><br />
+	По умолчанию после установки соединения APM работает в режиме совместимости с версией 1.0. Что бы переключится на более новую версию используйте <a href="int15.htm#530E">функцию 0Eh</a>.</td></tr><tr><td valign=top>	 
+  04h</td><td>Отключиться от интерфейса<br /><br/>
+	<b>Вход:</b><br />
+	BX=0<br /><br />
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.</td></tr><tr><td valign=top>	 
+  05h</td><td>CPU IDLE<br /><br/>
+  	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.</td></tr><tr><td valign=top>	 
+  06h</td><td>CPU BUSY<br /><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br /><br />
+	<b>Примечание:</b><br />
+	Эта функция гарантирует, что после её выполнения процессор будет работать на полной мощности. Её можно вызывать, даже если процессор уже работает на полной мощности</td></tr><tr><td valign=top>	 
+  07h</td><td>Задать состояние<br/><br/>
+	<b>Вход:</b><br/>
+	BX - ID устройства<br/>
+	CX - состояние<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/><br/>
+	<b>Примечание:</b><br />
+	Не вызывайте эту функцию из обработчика аппаратного прерывания<br /><br />
+	Определены следующие ID устройств (где XX - это номер устройства, XX = FF означает все устройства этого типа) :<br />
+	&nbsp;&nbsp;&nbsp;0001h - все управляемые устройства<br />
+	&nbsp;&nbsp;&nbsp;01XXh - видеокарты/дисплеи<br />
+	&nbsp;&nbsp;&nbsp;02XXh - устройства хранения данных<br />
+	&nbsp;&nbsp;&nbsp;03XXh - порты LPT<br />
+	&nbsp;&nbsp;&nbsp;04XXh - порты COM<br />
+	&nbsp;&nbsp;&nbsp;05XXh - сетевый адаптеры (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp;06XXh - разъёмы PCMCIA (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp;80XXh - аккамуляторы (поддерживается не везде) (счёт устройств начинается с единицы) (APM версии 1.2 или выше)<br />
+	&nbsp;&nbsp;&nbsp;EXXXh - определяется производителем системы<br />
+	на некоторых системах вместо ID 0001h используется ID 0000h. Это применимо не только к этой функции, но и ко всем функциям, использующим ID устройства.<br />
+	Определены следующие состояния:<br />
+	&nbsp;&nbsp;&nbsp;0000h - готовность (не работает с ID устройства 0001h). Устройство работает на полной мощности<br />
+	&nbsp;&nbsp;&nbsp;0001h - ожидание. Устрпойство находится в режиме пониженного энергопотребления<br />
+	&nbsp;&nbsp;&nbsp;0002h - пауза. Устройство выключено, но его состояния сохранено.<br />
+	&nbsp;&nbsp;&nbsp;0003h - выключено.<br />
+	&nbsp;&nbsp;&nbsp;0004h - обработка запроса на выход из состояний паузы или ожидания (только для устройства с ID 0001h) (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp;0005h - отмена запроса на выход из состояний паузы или ожидания (только для устройства с ID 0001h) (APM версии 1.1 или выше) (имеется ввиду, что этот вызов отменяет запрос)<br />
+	&nbsp;&nbsp;&nbsp;0020h-007Fh - определяется производителем системы<br /><br />
+	по стандарту версии 1.0 состояние 0003h не применимо к устройству с ID 0001h, но большинство систем обрабатывали такую ситуацию как выключение компьютера. Такое поведение было объявлено стандартным в версии 1.2, хотя упоминание о не пременимости состояния 0003h к устройству с ID 0001h было убрано с версии 1.1</td></tr><tr><td valign=top>	 
+  08h</td><td>Включить/выключить (enable/disable) управление питанием<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0001h (APM версии 1.1 или больше) FFFFh (APM версии 1.0)<br/>
+	CX = 0 - выключить, = 1 - включить<br /><br />
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/><br/>
+	<b>Примечание:</b><br />
+	APM не может быть одновременно выключено (disabled) и отключено (disengaged)<br />
+	Не вызывайте эту функцию из обработчика аппаратного прерывания</td></tr><tr><td valign=top>	 
+  09h</td><td>Востановить значения, используемые при включении компьютера<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0001h (APM версии 1.1 или больше) FFFFh (APM версии 1.0)<br/><br />
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/><br/>
+	<b>Примечание:</b><br />
+	В результате APM для устройств будет отключено (disengaged), однако для системы в целом будет включено (engaged)<br />
+	Не вызывайте эту функцию из обработчика аппаратного прерывания</td></tr><tr><td valign=top>	 
+  0Ah</td><td>Получить статус питания<br /><br/>
+	<b>Вход:</b><br/>
+	BX - ID устройства<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	BH - статус разёма питания:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 00h - питание отключено<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 01h - питание подключено<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 02h - подключено резервное питание<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; FFh - неизвестно<br />
+	BL - статус заряда аккамулятора:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 00h - высокий<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 01h - низкий<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 02h - критический<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 03h - заряжается<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; FFh - неизвестно<br />
+	CH - флаги аккамулятора (APM версии 1.1 или выше):<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 0 : высокий уровень заряда<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 1 : низкий уровень заряда<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 2 : критический уровень заряда<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 3 : аккамулятор заряжается<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 4 : такого аккамулятора не существует<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; биты 5,6 зарезервированны (сброшены)<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 7 : батарей нет<br />
+	CL - уровень заряда аккамулятора от 0 до 100, FFh = неизвестно<br />
+	DX - оставшееся время работы от аккамулятора (APM версии 1.1 или выше):<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 15 : если установлен, то в минутах; если сброшен, то в секундах<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; биты 14-0 : оставшееся время в указанных единицах<br />
+	если на входе ID устройства соответствовал аккамулятору, то:<br />
+	SI - количество установленных в системе аккамуляторов (APM версии 1.2 или выше)<br/><br/>
+	<b>Примечание:</b><br />
+	В качестве ID устройства может передаваться ID всей системы (0001h) или же ID аккамулятора<br />
+	В результате DX равный FFFFh означает "неизвестно"<br />
+	В результате CH равный FFFFh означает "неизвестно"<br />
+	Не вызывайте эту функцию из обработчика аппаратного прерывания</td></tr><tr><td valign=top>	 
+  0Bh</td><td>Получить событие питания<br /><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	BX - код события<br/>
+	CX - информация о событии (APM версии 1.2 или выше) (для событий 0003h и 0004h):<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 0 : разъёмы PCMCIA были выключены в состоянии паузы<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; остальные биты зарезервированны<br/><br/>
+	<b>Примечание:</b><br />
+	Коды событий:<br />
+	&nbsp;&nbsp;&nbsp; 0001h - запрос на переход в режим ожидания<br />
+	&nbsp;&nbsp;&nbsp; 0002h - запрос на переход в режим паузы<br />
+	&nbsp;&nbsp;&nbsp; 0003h - нормальное возобновление системы<br />
+	&nbsp;&nbsp;&nbsp; 0004h - критическое возобновление системы<br />
+	&nbsp;&nbsp;&nbsp; 0005h - низкий уровень заряда батареи<br />
+	&nbsp;&nbsp;&nbsp; 0006h - изменилось состояние питания (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 0007h - изменилось время (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 0008h - критический переход в режим паузы (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 0009h - запрос на переход в режим ожидания от пользователя (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 000Ah - запрос на переход в режим паузы от пользователя (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 000Bh - выход из режима ожидания (APM версии 1.1 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 000Ch - изменение возможностей (APM версии 1.2 или выше)<br />
+	&nbsp;&nbsp;&nbsp; 01XXh - события оборудования<br />
+	&nbsp;&nbsp;&nbsp; 02XXh - события, определяемые производителем<br /><br />
+	Не вызывайте эту функцию из обработчика аппаратного прерывания</td></tr><tr><td valign=top>	 
+  0Сh</td><td>Получить состояние питания (APM версии 1.1 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX - ID устройства<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	CX - состояние:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 0000h - готовность (не работает с ID устройства 0001h). Устройство работает на полной мощности<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 0001h - ожидание. Устрпойство находится в режиме пониженного энергопотребления<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 0002h - пауза. Устройство выключено, но его состояния сохранено.<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 0003h - выключено.<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; 0020h-007Fh - определяется производителем системы</td></tr><tr><td valign=top>	 
+  0Dh</td><td>Включить/выключить автоматическое управление электропитанием устройства (APM версии 1.1 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX - ID устройства<br/>
+	CX = 0 - выключить, = 1 включить<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.</td></tr><tr><td valign=top>	 
+  <a name="530E">0Eh</a></td><td>Задать версию APM (APM версии 1.1 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0<br />
+	CH - старший номер версии APM, поддерживаемой драйвером (в коде BCD)<br/>
+	CL - младший номер версии APM, поддерживаемой драйвером (в коде BCD)<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	CH - старший номер версии APM, используемый для текущего соединения (в коде BCD)<br/>
+	CL - младший номер версии APM, используемый для текущего соединения (в коде BCD)<br/><br/>
+	<b>Примечание:</b><br />
+	Эту функцию необходимо вызывать после установки соединения <a href="int15.htm#5301">функцией 01</a> для того, что бы использовать возможности новых версий APM. (По умолчанию APM эмулирует поведение версии 1.0)</td></tr><tr><td valign=top>
+  0Fh</td><td>Включить/отключить (engage/disengage) управление питанием (APM версии 1.1 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX - ID устройства<br/>
+	CX = 0 - выключить, = 1 включить<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/><br/>
+	<b>Примечание:</b><br />
+	Когда управление электропитанием отключено (disengaged), то APM автоматически управляет электропитанием устройств. Когда оно включено, то в управлении электропитанием участвует драйвер.</td></tr><tr><td valign=top>
+  10h</td><td>Узнать возможности (APM версии 1.2 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0<br /><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	BL - количество установленных в системе аккамуляторов<br />
+	CX - флаги возможностей:<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 0 : может войти в глобальный режим ожидания<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 1 : может войти в глобальный режим паузы<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 2 : таймер пробуждения выведет систему из состояния ожидания<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 3 : таймер пробуждения выведет систему из состояния паузы<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 4 : сигнал на линии ring com-порта или модема выведет систему из состояния ожидания<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 5 : сигнал на линии ring com-порта или модема выведет систему из состояния паузы<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 6 : сигнал на линии ring PCMCIA выведет систему из состояния ожидания<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; бит 7 : сигнал на линии ring PCMCIA выведет систему из состояния паузы<br />
+	&nbsp;&nbsp;&nbsp;&nbsp; биты 8-15 : зарезервированно<br/><br/>
+	<b>Примечание:</b><br />
+	Эта функция не требует наличия установленного соединения</td></tr><tr><td valign=top>
+  11h</td><td>Таймер пробуждения (APM версии 1.2 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0<br />
+	CL :<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 00 - Выключить таймер<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 01 - Узнать настройку таймера<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 02 - Задать настройку таймера<br/>
+	Если CL = 02:<br/>
+	CH - секунда (в коде BCD)<br/>
+	DH - час (в коде BCD)<br/>
+	DL - минута (в коде BCD)<br/>
+	SI - в старшем байте месяц (в коде BCD), в младшем байте день (в коде BCD)<br/>
+	DI - год (в коде BCD)<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе, если на входе CL = 01:<br />
+	CH - секунда (в коде BCD)<br/>
+	DH - час (в коде BCD)<br/>
+	DL - минута (в коде BCD)<br/>
+	SI - в старшем байте месяц (в коде BCD), в младшем байте день (в коде BCD)<br/>
+	DI - год (в коде BCD)<br/><br/>
+	<b>Примечание:</b><br />
+	Значение таймера задаётся в абсолютном времени, а не относительном</td></tr><tr><td valign=top>
+  12h</td><td>Включить/выключить пробуждение системы по сигналу на линии ring (APM версии 1.2 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0<br />
+	CL :<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 00 - Выключить пробуждение по сигналу на линии ring<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 01 - Включить пробуждение по сигналу на линии ring<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 02 - Узнать статус пробуждения по сигналу на линии ring<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	CX - статус пробуждения по сигналу на линии ring:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 00 - Выключено<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 01 - Включено<br/><br/>
+	<b>Примечание:</b><br />
+	Эта функция задаёт реакцию на все линии ring, способные пробудить систему</td></tr><tr><td valign=top>
+  13h</td><td>Включить/выключить запросы по таймеру (APM версии 1.2 или выше)<br /><br/>
+	<b>Вход:</b><br/>
+	BX = 0<br />
+	CL :<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 00 - Выключить запросы по таймеру<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 01 - Включить запросы по таймеру<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 02 - Узнать статус запросов по таймеру<br/><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - статус.<br/>
+	иначе:<br />
+	CX - статус запросов по таймеру:<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 00 - Выключено<br/>
+	&nbsp;&nbsp;&nbsp;&nbsp; 01 - Включено<br/><br/>
+	<b>Примечание:</b><br />
+	По умолчанию APM может предложить перейти врежим ожидания или паузы, основываясь на времени бездействия системы. Данная функция позволяет управлять этим поведением</td></tr><tr><td valign=top>
+  80h</td><td>Определить наличия расширения от изготовителя системы<br /><br/>
+	<b>Вход:</b><br/>
+	BH = 7fh<br /><br/>
+	<b>Выход:</b><br />
+	Если установлен флаг переноса, то произошла ошибка и AH - <a href="int15.htm#codesAPM">статус</a>.<br/>
+	иначе:<br />
+	BX - ID изготовителя<br/><br/>
+	<b>Примечание:</b><br />
+	Нередко также изменяются значения регистров AX и CX<br/>
+	Вызов функций расширения осуществляется через эту же функцию, а номер необходимой функции передаётся в BH</td></tr>
+</table>
+<br />
+<a name="codesAPM">Коды статуса APM</a><br />
+<table border=1 width=100%>
+<tr><td>Код</td><td>Значение</td></tr><tr><td valign=top>
+01</td><td>Управление электропитанием выключено (disabled)</td></tr><tr><td valign=top>
+02</td><td>Соединение уже установлено</td></tr><tr><td valign=top>
+03</td><td>Соединение не установлено</td></tr><tr><td valign=top>
+04</td><td>Соединение с интерфейсом реального режима не установлено</td></tr><tr><td valign=top>
+05</td><td>Соединение с интерфейсом 16-ти битного (i286) защищённого режима уже установлено</td></tr><tr><td valign=top>
+06</td><td>Интерфейс 16-ти битного (i286) защищённого режима не поддерживается</td></tr><tr><td valign=top>
+07</td><td>Соединение с интерфейсом 32-х битного защищённого режима уже установлено</td></tr><tr><td valign=top>
+08</td><td>Интерфейс 32-х битного защищённого режима не поддерживается</td></tr><tr><td valign=top>
+09</td><td>Неизвестный ID устройства</td></tr><tr><td valign=top>
+0Ah</td><td>Неверное значение в CX</td></tr><tr><td valign=top>
+0Bh</td><td>(APM версии 1.1 или выше) Интерфейс не включён (engaged)</td></tr><tr><td valign=top>
+0Ch</td><td>(APM версии 1.2 или выше) Функция не поддерживается</td></tr><tr><td valign=top>
+0Dh</td><td>(APM версии 1.2 или выше) Таймер пробуждения выключен</td></tr><tr><td valign=top>
+60h</td><td>Не могу перейти в запрошенный режим</td></tr><tr><td valign=top>
+80h</td><td>Нет событий управления электропитанием для обработки</td></tr><tr><td valign=top>
+86h</td><td>APM отсутствует</td></tr>
+</table>
+<br/><br/>
+<a name=oth><h3>Прочие функции</h3></a>
+<table border=1 width=100%><tr><td>AH</td><td>Функция</td></tr><tr><td valign=top>	 
+  04h</td><td> Создать таблицу системных параметров ABIOS<br /><br/>
+	<b>Выход:</b><br />
+	CF установлен - ошибка, иначе - успешно.</td></tr><tr><td valign=top>
+  05h</td><td> Создать таблицу инициализации ABIOS<br /><br/>
+	<b>Выход:</b><br />
+	CF установлен - ошибка, иначе - успешно.</td></tr><tr><td valign=top>
+  22h</td><td> Получить расположение ROM BASIC<br /><br/>
+	<b>Выход:<b><br />
+	CF установлен - ошибка (если AH=86h, то функция не поддерживается)<br/>
+	Если AX=0000, то ES:BX - расположение ROM BASIC в памяти.</td></tr><tr><td valign=top>
+  <a name="52">52h</a></td><td>Извлечь носитель информации<br /><br/>
+	<b>Вход:</b><br />
+	DL - номер диска(80h ... 0FFh)<br /><br />
+	<b>Выход:</b><br />
+	AH - состояние дисковой подсистемы<br />
+	Если флаг переноса установлен - произошла ошибка<br /><br />
+	<b>Примечание:</b><br />
+	Эта функция относится к стандарту EDD. Подробнее про этот стандарт вы можете узнать на странице <a href="int13.htm#EDD">прерывания 13h</a><br/>
+	Эта функция используется <a href="int13.htm#46">функцией 46h прерывания 13h</a></td></tr>
+	</table>
+</body>
+</html>

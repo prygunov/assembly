@@ -1,0 +1,171 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Низкоуровневое програмирование</title>
+	<meta name="keywords" content="программирование, DOS, int 21h, прерывание, AH=59h, AX=5900h, AH=59h AL=00h, Ошибки DOS, информация об ошибке, код ошибки" />
+	<meta name="description" content="Int 21h Функция 59h: Получить информацию о последней ошибке" />
+</head>
+<body>
+
+	<a href="../../../index.htm">Главная</a> - <a href="../../index.htm"> Реальный режим </a> - <a href="../ints.htm">Прерывания DOS</a> - <a href="index.htm">INT 21h: Сервис DOS.</a> - <b>Функция 59h: Получить информацию о последней ошибке</b><br />
+	<h2>Функция 59h: Получить информацию об последней ошибке.</h2><br/>
+	<b>Вход:</b><br/>
+	AH = 59h<br />
+	BX = 0000h<br /><br />
+	<b>Выход:</b><br/>
+	AX - Расширенный код ошибки<br />
+	BH - Класс ошибка<br />
+	BL - Рекомендуемое действие<br />
+	CH - Источник ошибки<br />
+	ES:DI указатель, для тех кодов ошибки, для которых необходимо<br /><br />
+	<b>Примечание:</b><br/>
+	CL, DX, SI, BP, и DS могут быть изменены<br />
+	Коды ошибок с номерами 01 - 12h унаследованны от класической схемы обработки ошибок, используемой в ранних версиях DOS<br />
+	<a name="exterr">Возможные значения расширенного кода ошибки:</a><br />
+	(это, безусловно, далеко не все возможные коды, однако здесь  перечисленно, пожалуй, большая часть, и уж все частовстречаемые коды)<br />
+	(Для програмного получения строки для ккода ошибки воспользуйтесь <a href="http://biosprog.narod.ru/real/dos/int21/..\int2f.htm#err2str">соответствующим сервисом прерывания 2Fh</a>)
+<table border=1 width=100%>
+<tr><td>Код</td><td>Значение</td></tr><tr><td valign=top>
+00</td><td>Нет ошибки</td></tr><tr><td valign=top>
+01</td><td>Невеврный номер функции</td></tr><tr><td valign=top>
+02</td><td>Файл не найден</td></tr><tr><td valign=top>
+03</td><td>Путь не найден</td></tr><tr><td valign=top>
+04</td><td>Нет доступного HANDLE (слишком много открытых файлов)</td></tr><tr><td valign=top>
+05</td><td>Отказанно в доступе</td></tr><tr><td valign=top>
+06</td><td>Неверный HANDLE</td></tr><tr><td valign=top>
+07</td><td>MCB повреждён</td></tr><tr><td valign=top>
+08</td><td>Недостаточно памяти<br/>
+		Применительно к печати может обозночать, что очередь печать заполнена</td></tr><tr><td valign=top>
+09</td><td>Неверный адрес блока памяти</td></tr><tr><td valign=top>
+0Ah</td><td>Неверное окружение</td></tr><tr><td valign=top>
+0Bh</td><td>Неверный формат</td></tr><tr><td valign=top>
+0Ch</td><td>Неверный код доступа<br/>
+		Применительно к файлам означает, что строка с полным именем фала слишком длинная</td></tr><tr><td valign=top>
+0Dh</td><td>Неверная дата или невереные данные - хрен поймёт этих англоязычных</td></tr><tr><td valign=top>
+0Eh</td><td>резерв</td></tr><tr><td valign=top>
+0Fh</td><td>Неверный диск</td><tr><td valign=top>
+10h</td><td>Нельзя удалить текущую директорию</td></tr><tr><td valign=top>
+11h</td><td>Не то же самое устройство</td></tr><tr><td valign=top>
+12h</td><td>Файлов больше нет</td></tr><tr><td valign=top>
+13h</td><td>Диск защищён от записи</td></tr><tr><td valign=top>
+14h</td><td>Задан неизвестный идентификатор устройства</td></tr><tr><td valign=top>
+15h</td><td>Устройство не готово</td></tr><tr><td valign=top>
+16h</td><td>Неизвестная команда</td></tr><tr><td valign=top>
+17h</td><td>Ошибка данных (Ошибка CRC)</td></tr><tr><td valign=top>
+18h</td><td>Неверный размер структуры</td></tr><tr><td valign=top>
+19h</td><td>Ошибка поиска</td></tr><tr><td valign=top>
+1Ah</td><td>Неизвестный тип диска</td></tr><tr><td valign=top>
+1Bh</td><td>Сектор не найден</td></tr><tr><td valign=top>
+1Ch</td><td>Нет бумаги в принтере</td></tr><tr><td valign=top>
+1Dh</td><td>Ошибка записи</td></tr><tr><td valign=top>
+1Eh</td><td>Ошибка чтения</td></tr><tr><td valign=top>
+1Fh</td><td>Сбой</td></tr><tr><td valign=top>
+20h</td><td>Ошибка общего доступа</td></tr><tr><td valign=top>
+21h</td><td>Ошибка блокировки</td></tr><tr><td valign=top>
+22h</td><td>Неправильная замена диска</td></tr><tr><td valign=top>
+23h</td><td>FCB не доступен (слишком много FCB уже выделенно)</td></tr><tr><td valign=top>
+24h</td><td>Общий буфер (sharing buffer) переполнен</td></tr><tr><td valign=top>
+25h</td><td>Неподходящая кодовая страница</td></tr><tr><td valign=top>
+26h</td><td>Немогу завершить операцию с файлом</td></tr><tr><td valign=top>
+27h</td><td>Недостаточно места на диске</td></tr><tr><td valign=top>
+28h - 31h</td><td>Резерв</td></tr><tr><td valign=top>
+32h</td><td>Сетевой запрос не поддерживается</td></tr><tr><td valign=top>
+33h</td><td>Удалённый (remote) компьютер нас не слушает</td></tr><tr><td valign=top>
+34h</td><td>Такое сетевое имя уже существует</td></tr><tr><td valign=top>
+35h</td><td>Не найдено сетевое имя</td></tr><tr><td valign=top>
+36h</td><td>Сеть занята</td></tr><tr><td valign=top>
+37h</td><td>Сетеве устройство больше не существует</td></tr><tr><td valign=top>
+38h</td><td>network BIOS command limit exceeded</td></tr><tr><td valign=top>
+39h</td><td>Аппаратная ошибка сетевого адаптера</td></tr><tr><td valign=top>
+3Ah</td><td>Неверный ответ из сети</td></tr><tr><td valign=top>
+3Bh</td><td>Неожиданная ошибка сети</td></tr><tr><td valign=top>
+3Ch</td><td>На том конце провода несовместимый адаптер</td></tr><tr><td valign=top>
+3Dh</td><td>Очередь печать полная</td></tr><tr><td valign=top>
+3Eh</td><td>Очередь печать не полная</td></tr><tr><td valign=top>
+3Fh</td><td>Недостаточно места для печати</td></tr><tr><td valign=top>
+40h</td><td>Сетевое имя было удалено</td></tr><tr><td valign=top>
+41h</td><td>Сетевая ошибка доступа</td></tr><tr><td valign=top>
+42h</td><td>Неверный тип сетевого адаптера/устройства</td></tr><tr><td valign=top>
+43h</td><td>Сетевое не найдено</td></tr><tr><td valign=top>
+44h</td><td>network name limit exceeded</td></tr><tr><td valign=top>
+45h</td><td>network BIOS session limit exceeded</td></tr><tr><td valign=top>
+46h</td><td>Временно приостановленно</td></tr><tr><td valign=top>
+47h</td><td>Сетевой запрос отвергнут</td></tr><tr><td valign=top>
+48h</td><td>Сетевая печать или переадресация диска приостановленна</td></tr><tr><td valign=top>
+49h</td><td>Сетевое ПО не установленно</td></tr><tr><td valign=top>
+4Ah</td><td>Неожиданное закрытие адаптера</td></tr><tr><td valign=top>
+4Bh - 4Fh</td><td>Резерв</td></tr><tr><td valign=top>
+50h</td><td>Файл уже существует</td></tr><tr><td valign=top>
+51h</td><td>Дубликат FCB</td></tr><tr><td valign=top>
+52h</td><td>Немогу создать директорию</td></tr><tr><td valign=top>
+53h</td><td>Ошибка в INT 14h</td></tr><tr><td valign=top>
+54h</td><td>Слишком много перенаправлений/нехватка структур</td></tr><tr><td valign=top>
+55h</td><td>Перенаправление на этот адрес уже было</td></tr><tr><td valign=top>
+56h</td><td>Неверный пароль</td></tr><tr><td valign=top>
+57h</td><td>Неверный параметр</td></tr><tr><td valign=top>
+58h</td><td>Ошибка записи по сети</td></tr><tr><td valign=top>
+59h</td><td>Сеть не поддерживает эту функци./Нехватает процессорных слотов.</td></tr><tr><td valign=top>
+5Ah</td><td>Необходимый компонент системы не установлен.</td></tr><tr><td valign=top>
+5Bh</td><td>Ошибка тайм-сервера.</td></tr><tr><td valign=top>
+5Сh</td><td>Дубликат в таблице сервиса таймера.</td></tr><tr><td valign=top>
+5Dh</td><td>Нет элементов для обработки.</td></tr><tr><td valign=top>
+5Eh</td><td>Неизветно.</td></tr><tr><td valign=top>
+5Fh</td><td>Прервано/Неверный вызов системы.</td></tr><tr><td valign=top>
+60h - 63h</td><td>Неивестно.</td></tr><tr><td valign=top>
+64h</td><td>Достигнут лимит открытых Семафоров.</td></tr><tr><td valign=top>
+A0h</td><td>Неверные аргументы.</td></tr>
+</table>
+<br/>
+	Возможные значения класса ошибки:
+<table border=1 width=100%>
+<tr><td>Код</td><td>Значение</td></tr><tr><td valign=top>
+01</td><td>Недостаточно ресурсов.<br/>
+		К примеру, места на диске.</td></tr><tr><td valign=top>
+02</td><td>Временная ситуация.<br/>
+		К примеру, файл занят другим процессом</td></tr><tr><td valign=top>
+03</td><td>Проблема прав доступа.</td></tr><tr><td valign=top>
+04</td><td>Внутренняя ошибка системы.</td></tr><tr><td valign=top>
+05</td><td>Ошибка обородования.</td></tr><tr><td valign=top>
+06</td><td>Системный сбой.</td></tr><tr><td valign=top>
+07</td><td>Ошибка приложения.</td></tr><tr><td valign=top>
+08</td><td>Что-то не найдено.</td></tr><tr><td valign=top>
+09</td><td>Неверный формат.</td></tr><tr><td valign=top>
+0Ah</td><td>Заблокированно.</td></tr><tr><td valign=top>
+0Bh</td><td>Ошибка носителя.</td></tr><tr><td valign=top>
+0Ch</td><td>Коллизия.<br/>
+		К примеру, такой файл уже существует</td></tr><tr><td valign=top>
+0Dh</td><td>Иное.</td></tr><tr><td valign=top>
+0Eh</td><td>Не получается.</td></tr><tr><td valign=top>
+0Fh</td><td>Время.</td></tr>
+</table>
+<br/>
+	Возможные значения реккомендуемого действия:
+<table border=1 width=100%>
+<tr><td>Код</td><td>Значение</td></tr><tr><td valign=top>
+01h</td><td>Попробовать заново.</td></tr><tr><td valign=top>
+02h</td><td>Подождать и попробовать заново.</td></tr><tr><td valign=top>
+03h</td><td>Попросить пользователя повторить ввод.</td></tr><tr><td valign=top>
+04h</td><td>Отменить действие с откатом внесённых изменений.</td></tr><tr><td valign=top>
+05h</td><td>Немедленно отменить действие.</td></tr><tr><td valign=top>
+06h</td><td>Игнорировать.</td></tr><tr><td valign=top>
+07h</td><td>Попробовать заново после того, как пользователь произведёт требуемые действия.<br/>
+		К примеру, вставит дискету.</td></tr>
+</table>
+<br/>
+	Возможные значения Источника ошибки:
+<table border=1 width=100%>
+<tr><td>Код</td><td>Значение</td></tr><tr><td valign=top>
+01h</td><td>Неизвестно.</td></tr><tr><td valign=top>
+02h</td><td>Блочное устройство.<br/>
+		К примеру, ошибка диска</td></tr><tr><td valign=top>
+03h</td><td>Сетевая ошибка.</td></tr><tr><td valign=top>
+04h</td><td>Символьное устройство.<br/>
+		К примеру, принтер.</td></tr><tr><td valign=top>
+05h</td><td>Оперативная память.</td></tr>
+</table>
+</body>
+</html>
+ 
