@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды OUTS, OUTSB, OUTSW, OUTSD - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды OUTS, OUTSB, OUTSW, OUTSD</h1>
+                </div>                <div class='post-info'>
+
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды OUTS, OUTSB, OUTSW, OUTSD позволяют выводить в порт ввода-вывода последовательность байт,
+                    слов или двойных слов. Аналогичны командам <a href="29.html" target="_blank">INS, INSB, INSW,
+                        INSD</a>, только работают на вывод данных в порт.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда OUTS</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">OUTS DX,op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - m8, m16, m32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Вывод строки в порт</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда OUTS не является командой процессора. Когда в тексте программы
+                            встречается эта команда, компилятор вычисляет размерность ее операнда и на основании
+                            вычислений подставляет на ее место одну из реальных команд процессора - OUTSB, OUTSW или
+                            OUTSD.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+outs	dx, es:str1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда OUTSB</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">OUTSB</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Вывод байтов из строки в порт</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда OUTSB пересылает байт данных из ячейки памяти по адресу DS:SI в порт
+                            вывода, заданный регистром DX. Аналогична по действию команде OUT.<br/>
+                            После выполнения пересылки регистр SI увеличивается на 1, если флаг DF=0 или уменьшается на
+                            1, если флаг DF=1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используется регистр ESI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	dx,03DFh
+sub	si,si
+outsb
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда OUTSW</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">OUTSW</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Вывод слов из строки в порт</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда OUTSW пересылает слово из ячейки памяти по адресу DS:SI в порт
+                            вывода, заданный регистром DX. Аналогична по действию команде OUT.<br/>
+                            После выполнения пересылки регистр SI увеличивается на 2, если флаг DF=0 или уменьшается на
+                            2, если флаг DF=1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используется регистр ESI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	dx,03DFh
+sub	si,si
+outsw
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда OUTSD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">OUTSD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Вывод двойных слов из строки в порт</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда OUTSD пересылает двойное слово из ячейки памяти по адресу DS:SI в
+                            порт вывода, заданный регистром DX. Аналогична по действию команде OUT.<br/>
+                            После выполнения пересылки регистр SI увеличивается на 4, если флаг DF=0 или уменьшается на
+                            4, если флаг DF=1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используется регистр ESI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	dx,03DFh
+sub	si,si
+outsd
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

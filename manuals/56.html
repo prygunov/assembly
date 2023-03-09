@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды SCAS, SCASB, SCASW, SCASD - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды SCAS, SCASB, SCASW, SCASD</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды SCAS, SCASB, SCASW, SCASD - это команды, предназначенные для сканирования строк байтов, слов
+                    и двойных слов в поисках искомого значения. Искомое значение должно при этом находиться в регистре
+                    AL, AX или EAX соответственно.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда SCAS</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SCAS op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - m8, m16, m32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сканирование строки</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF, CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SCAS на самом деле не является командой процессора. Когда в тексте
+                            программы встречается эта команда, компилятор вычисляет размерность ее операнда и на
+                            основании вычислений подставляет на ее место одну из реальных команд процессора SCASB, SCASW
+                            или SCASD.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+scas	es:str2
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда SCASB</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SCASB</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сканирование строки байт</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF, CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SCASB сравнивает регистр AL с байтом в ячейке памяти по адресу ES:DI
+                            и устанавливает флаги аналогично команде CMP. После выполнения команды, регистр DI
+                            увеличивается на 1, если флаг DF = 0, или уменьшается на 1, если DF = 1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используется регистр EDI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	di,offset str1
+cld
+scasb
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда SCASW</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SCASW</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сканирование строки слов</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF, CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SCASW сравнивает регистр AX со словом в ячейке памяти по адресу
+                            ES:DI и устанавливает флаги аналогично команде CMP. После выполнения команды, регистр DI
+                            увеличивается на 2, если флаг DF = 0, или уменьшается на 2, если DF = 1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используется регистр EDI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	di,offset str1
+cld
+scasw
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда SCASD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SCASD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сканирование строки двойных слов</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF, CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SCASD сравнивает регистр EAX с двойным словом в ячейке памяти по
+                            адресу ES:DI и устанавливает флаги аналогично команде CMP. После выполнения команды, регистр
+                            DI увеличивается на 4, если флаг DF = 0, или уменьшается на 4, если DF = 1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используется регистр EDI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	di,offset str1
+cld
+scasd
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

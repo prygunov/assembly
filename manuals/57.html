@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды SETcc - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды SETcc</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды SETcc служат для установки байта, заданного операндом, в значение 1 или 0 в зависимости от
+                    заданных условий. Условия задаются формой самой команды.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команды SETcc</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SETcc op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Установка байта по условию</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команды установки байта по условию проверяют состояние регистра флагов и, в
+                            зависимости от заданного условия (cc) записывают в операнд значение 1, если условие
+                            выполняется, и 0, если условие не выполняется.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+or	cx,cx
+setz	al
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Условия выполнения команд</p>
+
+                <table bgcolor="gray" border="0" cellpadding="3" cellspacing="1"
+                       class="table table-condensed table-bordered">
+                    <tbody>
+                    <tr bgcolor="white">
+                        <td align="center"><b>Обозначение<br/>
+                            условия</b></td>
+                        <td align="center"><b>Значение<br/>
+                            флагов</b></td>
+                        <td align="center"><b>Описание условия</b></td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>A<br/>
+                            NBE
+                        </td>
+                        <td>CF = 0 и ZF = 0</td>
+                        <td>Above (беззнаковое больше)<br/>
+                            Not Below or Equal (беззнаковое больше)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>AE<br/>
+                            NB<br/>
+                            NC
+                        </td>
+                        <td>CF = 0</td>
+                        <td>Above or Equal (беззнаковое больше или равно)<br/>
+                            Not Below (беззнаковое больше или равно)<br/>
+                            Not Carry (нет переноса)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>B<br/>
+                            NAE<br/>
+                            C
+                        </td>
+                        <td>CF = 1</td>
+                        <td>Below (беззнаковое меньше)<br/>
+                            Not Above or Equal (беззнаковое меньше)<br/>
+                            Carry (перенос)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>BE<br/>
+                            NA
+                        </td>
+                        <td>CF = 1 или ZF = 1</td>
+                        <td>Below or Equal (беззнаковое меньше или равно)<br/>
+                            Not Above (беззнаковое меньше или равно)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>E<br/>
+                            Z
+                        </td>
+                        <td>ZF = 1</td>
+                        <td>Equal (равно)<br/>
+                            Zero (ноль)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>G<br/>
+                            NLE
+                        </td>
+                        <td>ZF = 0 и SF = OF</td>
+                        <td>Great (знаковое больше)<br/>
+                            Not Less or Equal (знаковое больше)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>GE<br/>
+                            NL
+                        </td>
+                        <td>SF = OF</td>
+                        <td>Great or Equal (знаковое больше или равно)<br/>
+                            Not Less (знаковое больше или равно)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>L<br/>
+                            NGE
+                        </td>
+                        <td>SF &lt;&gt; OF</td>
+                        <td>Less (знаковое меньше)<br/>
+                            Not Great or Equal (знаковое меньше)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>LE<br/>
+                            NG
+                        </td>
+                        <td>ZF = 1 или SF &lt;&gt; OF</td>
+                        <td>Less or Equal (знаковое меньше или равно)<br/>
+                            Not Great (знаковое меньше или равно)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>NE<br/>
+                            NZ
+                        </td>
+                        <td>ZF = 0</td>
+                        <td>Not Equal (не равно)<br/>
+                            Not Zero (не ноль)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>NO</td>
+                        <td>OF = 0</td>
+                        <td>No Overflow (нет переполнения)</td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>O</td>
+                        <td>OF = 1</td>
+                        <td>Overflow (переполнение)</td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>NP<br/>
+                            PO
+                        </td>
+                        <td>PF = 0</td>
+                        <td>No Parity (нет чётности)<br/>
+                            Parity Odd (нечётное)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>P<br/>
+                            PE
+                        </td>
+                        <td>PF = 1</td>
+                        <td>Parity (чётность)<br/>
+                            Parity Even (чётное)
+                        </td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>NS</td>
+                        <td>SF = 0</td>
+                        <td>No Sign (нет знака)</td>
+                    </tr>
+                    <tr bgcolor="white">
+                        <td>S</td>
+                        <td>SF = 1</td>
+                        <td>Sign (есть знак)</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

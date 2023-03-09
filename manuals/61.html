@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды SUB и SBB - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды SUB и SBB</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды SUB и SBB - это команды целочисленного вычитания. Команда SUB просто производит вычитание
+                    значение одного операнда из значения другого. Команда SBB производит вычитаение с заемом. То есть
+                    кроме простого вычитания одного значения из другого из него еще вычитается значение флага CF. Эта
+                    команда используется при арифметических операциях с большими числами, когда при вычитании из младшей
+                    части числа произошел заем бита (что отражается во флаге CF) и при вычитании из старшей части числа,
+                    этот заемный бит надо учесть.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда SUB</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SUB op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r/m8, r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Целочисленное вычитание</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF, CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SUB вычитает второй операнд из первого.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Операнды не могут одновременно быть ячейками памяти, один из операндов должен быть
+                            регистром.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+sub	ax,bx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда SBB</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SBB op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r/m8, r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Целочисленное вычитание с заемом</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF, CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SUB вычитает из первого операнда второй операнд и флаг переноса
+                            CF.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Операнды не могут одновременно быть ячейками памяти, один из операндов должен быть
+                            регистром.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+sub	ax,bx
+sbb	dx,cx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

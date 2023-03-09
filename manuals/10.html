@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="8e756c30567e867f" name="yandex-verification"/>
+    <meta content="" property="og:site_name"/>
+    <title>Команды AAA, AAD, AAM, AAS - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body>
+
+<main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды AAA, AAD, AAM, AAS</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p><span style="font-size:14px;">Команды AAA, AAD, AAM, AAS служат для работы с двоично-десятичными числами (BCD). Двоично-десятичные числа - это форма представления числа в бинарном кодe. Каждая цифра в формате BCD представлена четырьмя битами, то есть может иметь значения от 0 до 15. Значения от 0 до 9 соответствуют цифрам от 0 до 9, остальные значения являются в формате BCD запрещенными.</span>
+                </p>                <p>Для примера посмотрим как выглядит число 258 в формате BCD: 2 - это 0010, 5 - это 0101, 8 - это 1000.
+                    Итого число 258 в формате BCD записывается как 001001011000.</p>
+
+                <p>Арифметические операции с такими числами можно выполнять точно также, как и с числами в обычном
+                    представлениии, за исключением того, что после операций необходимо производить двоично-десятичную
+                    коррекцию результата. Например после сложения чисел 5 и 6 получаем результат 11 (0101 + 0110 =
+                    1011), что является запрещенным значением в BCD. Для приведения результата в нормальный для BCD вид
+                    используется команда коррекции AAA. После ее выполнения в результате получим 00010001.</p>
+
+                <p>Рассмотрим команды подробнее.</p>
+
+                <h5><strong><i>Команда AAA</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%"><span
+                                style="font-family:courier new,courier,monospace;">Синтаксис:</span></td>
+                        <td><span style="font-family:courier new,courier,monospace;"><b class="spec">AAA</b></span></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Операнды:</span></td>
+                        <td><span style="font-family:courier new,courier,monospace;">Нет</span></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Назначение:</span>
+                        </td>
+                        <td><span
+                                style="font-family:courier new,courier,monospace;">ASCII-коррекция после сложения</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Процессор:</span></td>
+                        <td><span style="font-family:courier new,courier,monospace;">8086+</span></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Флаги:</span></td>
+                        <td><span style="font-family:courier new,courier,monospace;">Флаги CF и AF устанавливаются в 1, если произошел перенос из AL в AH, в противном случае они равны нулю. Значения флагов OF, SF, ZF и PF не определены.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Комментарий:</span>
+                        </td>
+                        <td class="comment"><span style="font-family:courier new,courier,monospace;">Команда AAA корректирует сумму двух неупакованных двоично-десятичных чисел в регистре AL. Если коррекция приводит к десятичному переносу, регистр AH увеличивается на 1.<br/>
+			Эту команду лучше использовать сразу после команды сложения двух таких чисел.</span></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Ограничения:</span>
+                        </td>
+                        <td><span style="font-family:courier new,courier,monospace;">Нет</span></td>
+                    </tr>
+                    <tr>
+                        <td valign="top"><span style="font-family:courier new,courier,monospace;">Примеры:</span></td>
+                        <td class="sample">
+			<pre>
+<span style="font-family:courier new,courier,monospace;">mov	ax,0005h
+add	ax,0006h	;AX=000Bh
+aaa			;AX=0101h
+</span></pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда AAD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">AAD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>ASCII-коррекция перед делением</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги SF, ZF и PF устанавливаются в соответствии с результатом. Значения флагов OF, AF и CF
+                            не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда AAD выполняет коррекцию неупакованного двоично-десятичного числа,
+                            находящегося в регистре AX, так, чтобы последующее деление привело к десятичному результату.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	ax,0205h
+mov	bl,05h
+aad		;AX=0019h
+div	bl	;AX=0005h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда AAM</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">AAM</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>ASCII-коррекция после умножения</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги SF, ZF и PF устанавливаются в соответствии с результатом. Значения флагов OF, AF и CF
+                            не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда AAM корректирует результат умножения неупакованных
+                            двоично-десятичных чисел, который находится в регистре AX после выполнения команды MUL,
+                            преобразовывая его в пару неупакованных двоично-десятичных чисел в регистрах AH и AL.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	al,05h
+mov	bl,05h
+mul	bl    	;AX=0019h
+aam		;AX=0205h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда AAS</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">AAS</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>ASCII-коррекция после вычитания</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги CF и AF устанавливаются в 1, если произошел заем из AL в AH, в противном случае они
+                            равны нулю. Значения флагов OF, SF, ZF и PF не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда AAS корректирует разность двух неупакованных двоично-десятичных
+                            чисел в регистре AL сразу после команды SUB или SBB. Если операция приводит к займу, регистр
+                            AH уменьшается на 1.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	ax,0101h
+sub	al,06h	;AX=01FBh
+aas		;AX=0005h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

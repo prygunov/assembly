@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды DIV, IDIV - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды DIV, IDIV</h1>
+                </div>                <div class='post-info'>
+
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды DIV и IDIV позволяют производить целочисленное деление двух чисел. Команда DIV делит числа
+                    без знака. Команда IDIV делит числа со знаком.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команды DIV и IDIV</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">DIV op1</b><br/>
+                            <b class="spec">IDIV op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Деление беззнакового числа (DIV) и числа со знаком (IDIV)</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF и CF не определены</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Если размерность операнда составляет 8 бит, то команда производит
+                            целочисленное деление содержимого регистра AX на значение операнда и помещает результат
+                            деления в регистр AL, а остаток - в регистр AH.<br/>
+                            Если операнд - 16-битное слово, команда производит целочисленное деление содержимого пары
+                            регистров DX:AX на значение операнда и помещает результат деления в регистр AX, а остаток -
+                            в регистр DX.<br/>
+                            Если операнд - двойное слово, команда производит целочисленное деление содержимого пары
+                            регистров EDX:EAX на значение операнда и помещает результат деления в регистр EAX, а остаток
+                            - в регистр EDX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Если результат деления не помещается в регистр-приемник (такое может произойти при делении
+                            больших чисел на маленькие), происходит вызов прерывания 0. То же самое происходит и при
+                            попытке поделить число на ноль.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	ax,2343h
+mov	bl,355
+div	bl
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

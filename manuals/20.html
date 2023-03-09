@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команда CMP - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команда CMP</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команда CMP позволяет сравнивать между собой любые два числа, находящиеся в регистрах или ячейках
+                    памяти. В зависимости от результатов сравнения чисел, процессором выставляются определенные значения
+                    регистра флагов.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда CMP</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">CMP op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r/m8, r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сравнение</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF, SF, ZF, AF, PF и CF устанавливаются в соответствии с результатом.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда CMP вычитает значение второго операнда из первого, но в отличие от
+                            команды SUB, она не записывает результат, а только изменяет флаги.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Не допускается сравнения значений двух ячеек памяти. Такое сравнение должно производиться
+                            через какой-нибудь регистр.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+cmp	ax,0012h
+cmp	cx,dx
+cmp	byte ptr [bx],09h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

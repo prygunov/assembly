@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды AND, OR, XOR, NOT - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды AND, OR, XOR, NOT</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды AND, OR, XOR, NOT - это набор команд для выполнения побитовых логических операций над
+                    числами. Команда AND (логическое &quot;И&quot;, логическое умножение или <em>конъюнкция</em>)
+                    выполняется следующим образом: если бит первого числа установлен в 1 и бит второго числа установлен
+                    в 1, то и бит результата тоже будет установлен в 1, иначе бит результата будет сброшен в 0.</p>                <p>Команда OR (логическое &quot;ИЛИ&quot;, логическое сложение или <em>дизъюнкция</em>) устанавливает
+                    бит результата в 1, если бит первого или второго числа установлен в 1.</p>
+
+                <p>Команда XOR (исключающее &quot;ИЛИ&quot;, <em>строгая дизъюнкция</em>) работает как и команда OR, но
+                    если биты обоих чисел установлены в 1, то в результате будет бит сброшенный в 0.</p>
+
+                <p>Команда NOT (<em>инверсия</em>) просто устанавливает биты результата на на противоположные от битов
+                    числа, то есть если в числе был бит установленный в 1, то в результате будет сброшенный в 0 и
+                    наоборот.</p>
+
+                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда AND</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">AND op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r/m8, r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Логическое &quot;И&quot;</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF и CF очищаются.<br/>
+                            Флаги PF, SF и ZF устанавливаются в соответствии с результатом.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда AND выполняет побитовое &quot;логическое И&quot; над операндами.
+                            Результат помещается в первый операнд и выполняется соответствующая установка флагов.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Не допускается использовать ячейки памяти в качестве обоих операндов одновременно.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	ax,0001h
+and	ax,1000h	;AX=0000h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда OR</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">OR op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r/m8, r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Логическое &quot;ИЛИ&quot;</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF и CF очищаются.<br/>
+                            Флаги PF, SF и ZF устанавливаются в соответствии с результатом.<br/>
+                            Флаг AF не определен.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда OR выполняет побитовое &quot;логическое ИЛИ&quot; над операндами.
+                            Результат помещается в первый операнд и выполняется соответствующая установка флагов.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Не допускается использовать ячейки памяти в качестве обоих операндов одновременно.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	ax,0001h
+or	ax,1000h	;AX=1001h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда XOR</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">XOR op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r/m8, r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Логическое исключающее &quot;ИЛИ&quot;</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги OF и CF очищаются.<br/>
+                            Флаги PF, SF и ZF устанавливаются в соответствии с результатом. Флаг AF не определен.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда XOR выполняет побитовое &quot;логическое исключающее ИЛИ&quot; над
+                            операндами. Результат помещается в первый операнд и выполняется соответствующая установка
+                            флагов.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Не допускается использовать ячейки памяти в качестве обоих операндов одновременно.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	ax,0001h
+xor	ax,1000h	;AX=1001h
+xor	ax,1000h	;AX=0001h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда NOT</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">NOT op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Инверсия</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда NOT выполняет побитовое инвертирование операнда. Каждый бит операнда
+                            меняет свое значение на противоположное.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	al,00010110b
+not	al		;AL=11101001b
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

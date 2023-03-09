@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команда CALL - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команда CALL</h1>
+                </div>                <div class='post-info'>
+                    <div class='pull-left post-info-time'>
+                        Опубликовано: 25.04.2017
+                    </div>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команда CALL выполняет вызов подпрограммы, адрес которой задан операндом.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда CALL</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">CALL op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - i16, i32, i48, r/m16, r/m32, m48</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Вызов подпрограммы (процедуры)</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">
+                            <p>Команда CALL сохраняет в стеке адрес следующей команды и передает управление по адресу,
+                                указанному в операнде.<br/>
+                                В зависимости от типа операнда процессор трактует его значение по-разному:</p>
+
+                            <p><b>Непосредственное значение</b><br/>
+                                Трактуется процессором как смещение адреса перехода относительно следующей команды или
+                                как адрес дальнего межсегментного перехода.</p>
+
+                            <p><b>Регистр</b><br/>
+                                Его значение будет принято процессором в качестве адреса перехода в пределах текущего
+                                сегмента.</p>
+
+                            <p><b>Ячейка памяти</b><br/>
+                                В зависимости от размера ячейки памяти, процессор трактует содержимое этой ячейки как
+                                адрес ближнего или дальнего перехода.</p>
+                            При выполнении дальнего перехода, команда CALL помещает в стек сначала сегмент следующей
+                            команды, а затем ее смещение в сегменте. При выполнении ближнего перехода, сегмент в стек не
+                            заносится.<br/>
+                            Операнды размером в 48 бит используются в защищенном режиме (16 бит на селектор, 32 бита на
+                            смещение).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+call	l1		;Ближний переход, непосредственное смещение
+call	l2		;Дальний переход, непосредственный адрес
+call	ax		;Ближний переход, адрес в регистре AX
+call	[bx]		;Ближний переход, адрес в ячейке памяти,
+			;адресуемой регистром BX
+call dword ptr [bx]	;Дальний переход, адрес в 32-битной ячейке памяти,
+			;адресуемой регистром BX
+l1:
+	...
+	ret
+
+l2	proc	far
+	...
+	retf
+	endp
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Организация стека - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Организация стека</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Стек &mdash; это специальным образом организованный участок памяти, используемый для временного
+                    хранения переменных, для передачи параметров вызываемым подпрограммам и для сохранения адреса
+                    возврата при вызове процедур и прерываний. Легче всего представить стек в виде стопки листов бумаги
+                    (это одно из значений слова &laquo;stack&raquo; в английском языке) &mdash; вы можете класть и
+                    забирать листы бумаги только с вершины стопки. Таким образом, если записать в стек числа 1, 2, 3, то
+                    при чтении они будут получаться в обратном порядке &mdash; 3, 2, 1.</p>                <p>Стек располагается в сегменте памяти, описываемом регистром SS, а текущее смещение вершины стека
+                    записано в регистре ESP, причем при записи в стек значение этого смещения уменьшается, то есть стек
+                    растет вниз от максимально возможного адреса (рис. 4). Такое расположение стека &laquo;вверх ногами&raquo;
+                    может быть необходимо, например в бессегментной модели памяти, когда все сегменты, включая сегмент
+                    стека и сегмент кода, занимают одну и ту же область &mdash; всю память. Тогда программа исполняется
+                    в нижней области памяти, в области малых адресов, и EIP растет, а стек располагается в верхней
+                    области памяти, и ESP уменьшается.</p>
+
+                <table>
+                    <tbody>
+                    <tr>
+                        <td width="60">FFFFFFFC</td>
+                        <td align="center" style="border: solid 1 black;" width="100">Дно стека</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FFFFFFF8</td>
+                        <td style="border: solid 1 black;">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FFFFFFF4</td>
+                        <td style="border: solid 1 black;">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FFFFFFF0</td>
+                        <td style="border: solid 1 black;">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FFFFFFEC</td>
+                        <td align="center" style="border: solid 1 black;">Вершина стека</td>
+                        <td>&lt;- ESP = FFFFFFEC</td>
+                    </tr>
+                    <tr>
+                        <td>FFFFFFE8</td>
+                        <td style="border: solid 1 black;">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>FFFFFFE4</td>
+                        <td style="border: solid 1 black;">&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

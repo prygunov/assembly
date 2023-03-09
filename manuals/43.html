@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды MOVS, MOVSB, MOVSW, MOVSD - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды MOVS, MOVSB, MOVSW, MOVSD</h1>
+                </div>                <div class='post-info'>
+
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды MOVS, MOVSB, MOVSW, MOVSD используются для копирования одного участка памяти в другой.
+                    Копирование может происходить побайтно, словами или двойными словами.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда MOVS</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">MOVS op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - m8, m16, m32<br/>
+                            <b class="ops">op2</b> - m8, m16, m32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Копирование строки</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда MOVS на самом деле не является командой процессора. Когда в тексте
+                            программы встречается эта команда, компилятор вычисляет размерность ее операндов и на
+                            основании вычислений подставляет на ее место одну из реальных команд процессора MOVSB, MOVSW
+                            или MOVSD.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Операнды должны иметь один и тот же размер</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+movs	str1, es:str2
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда MOVSB</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">MOVSB</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Копирование строк байтов</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда MOVSB копирует один байт из ячейки памяти по адресу DS:SI в ячейку
+                            памяти по адресу ES:DI.<br/>
+                            После выполнения команды, регистры SI и DI увеличиваются на 1, если флаг DF = 0, или
+                            уменьшаются на 1, если DF = 1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используются регистры ESI и
+                            EDI соответственно.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	si,offset str1
+mov	di,offset str2
+cld
+movsb
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда MOVSW</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">MOVSW</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Копирование строк слов</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда MOVSW копирует слово из ячейки памяти по адресу DS:SI в ячейку
+                            памяти по адресу ES:DI.<br/>
+                            После выполнения команды, регистры SI и DI увеличиваются на 2, если флаг DF = 0, или
+                            уменьшаются на 2, если DF = 1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используются регистры ESI и
+                            EDI соответственно.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	si,offset str1
+mov	di,offset str2
+cld
+movsw
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда MOVSD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">MOVSD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Копирование строк двойных слов</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда MOVSD копирует двойное слово из ячейки памяти по адресу DS:SI в
+                            ячейку памяти по адресу ES:DI.<br/>
+                            После выполнения команды, регистры SI и DI увеличиваются на 4, если флаг DF = 0, или
+                            уменьшаются на 4, если DF = 1.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то используются регистры ESI и
+                            EDI соответственно.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	si,offset str1
+mov	di,offset str2
+cld
+movsd
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды LOOP, LOOPD, LOOPE, LOOPNE, LOOPNZ, LOOPZ - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды LOOP, LOOPD, LOOPE, LOOPNE, LOOPNZ, LOOPZ</h1>
+                </div>                <div class='post-info'>
+
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды LOOP, LOOPD, LOOPE, LOOPNE, LOOPNZ, LOOPZ используются для организации циклов. Счетчиком
+                    цикла служит регистр CX или ECX (в зависимости от разрядности). В командах циклов с условием (Z, NZ,
+                    E, NE) цикл выполняется пока заданное условие истинно.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команды LOOP, LOOPD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">LOOP op1</b><br/>
+                            <b class="spec">LOOPD op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - i8</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Цикл</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+<br/>
+                            80386+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда LOOP уменьшает значение регистра CX на 1 и, если регистр не равен 0,
+                            передает управление по смещению, заданному в операнде. В противном случае (регистр CX
+                            обнулился) выполняется следующая команда.<br/>
+                            Если команда используется в 32-разрядном режиме адресации или указана команда LOOPD, то для
+                            цикла будет использован регистр ECX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+	mov	cx,100
+l1:	add	ax,[bx]
+	inc	bx
+	loop	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команды LOOPE и LOOPZ</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">LOOPE op1</b><br/>
+                            <b class="spec">LOOPZ op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - i8</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Цикл, пока равно (пока ноль)</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команды LOOPE и LOOPZ уменьшают значение регистра CX на 1 и, если регистр не
+                            равен 0 и флаг ZF = 1, передают управление по смещению, заданному в операнде.<br/>
+                            Если команда используется в 32-разрядном режиме адресации или используются 32-битные
+                            модификации этих команд (LOOPDE, LOOPDZ), то для цикла будет использован регистр ECX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Поскольку все модификации команды LOOP не изменяют регистр флагов, то флаг ZF должен
+                            изменяться внутри тела цикла.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+	mov	cx,100
+l1:	add	ax,[bx]
+	dec	bx
+	loope	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команды LOOPNE и LOOPNZ</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">LOOPNE op1</b><br/>
+                            <b class="spec">LOOPNZ op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - i8</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Цикл, пока не равно (пока не ноль)</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команды LOOPNE и LOOPNZ уменьшают значение регистра CX на 1 и, если регистр
+                            не равен 0 и флаг ZF = 0, передают управление по смещению, заданному в операнде.<br/>
+                            Если команда используется в 32-разрядном режиме адресации или используются 32-битные
+                            модификации этих команд (LOOPDNE, LOOPDNZ), то для цикла будет использован регистр ECX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Поскольку все модификации команды LOOP не изменяют регистр флагов, то флаг ZF должен
+                            изменяться внутри тела цикла.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+	mov	cx,100
+l1:	add	ax,[bx]
+	dec	bx
+	loopne	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

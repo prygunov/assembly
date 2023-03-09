@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды PUSHF, PUSHFD, POPF, POPFD - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды PUSHF, PUSHFD, POPF, POPFD</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды PUSHF, PUSHFD, POPF, POPFD позволяют поместить в стек регистр флагов и извлечь его из
+                    стека.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команды PUSHF, PUSHFD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">PUSHF</b><br/>
+                            <b class="spec">PUSHFD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Помещение регистра флагов в стек</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+<br/>
+                            80386+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда PUSHF помещает в стек регистр флагов (FLAGS).<br/>
+                            Если команда используется в 32-разрядном режиме адресации или указана команда PUSHFD, то в
+                            стек помещается 32-разрядный регистр флагов (EFLAGS).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+pushf
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда POPF, POPFD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">POPF</b><br/>
+                            <b class="spec">POPFD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Извлечение регистра флагов из стека</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+<br/>
+                            80386+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда POPF извлекает из стека содержимое регистра флагов (FLAGS).<br/>
+                            Если команда используется в 32-разрядном режиме адресации или указана команда POPFD, то из
+                            стека извлекается 32-разрядный регистр флагов (EFLAGS).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+popf
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды PUSH и POP - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды PUSH и POP</h1>
+                </div>                <div class='post-info'>
+
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды PUSH и POP - это основные команды для работы со стеком. Позволяют заносить значения регистров
+                    и ячеек памяти в стек и извлекать их оттуда.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда PUSH</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">PUSH op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32, sr, i8, i16, i32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Помещение операнда в стек</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда PUSH уменьшает значение регистра стека на размер операнда (2 или 4)
+                            и копирует содержимое операнда в память по адресу SS:SP.<br/>
+                            Начиная с 80186 процессора появилась возможность помещать в стек непосредственные значения.
+                            При этом, если в стек заносится байт, то он расширяется до слова с сохранением знака.<br/>
+                            Начиная с 80286 процессоров, команда PUSH SP помещает в стек значение SP до того, как эта же
+                            команда его уменьшит, в то время как на 8086 значение SP помещалось в стек уже уменьшенным
+                            на два.<br/>
+                            Если команда выполняется в 32-разрядном режиме, то используется регистр ESP.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+push	dx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда POP</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">POP op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32, sr</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Извлечение операнда из стека</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда POP копирует содержимое ячейки памяти по адресу SS:SP в операнд и
+                            увеличивает значение регистра стека на размер операнда (2 или 4).<br/>
+                            Если операнд использует регистр SP для косвенной адресации, команда POP вычисляет адрес уже
+                            после того, как она увеличивает SP.<br/>
+                            Если команда выполняется в 32-разрядном режиме, то используется регистр ESP.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>С помощью команды POP нельзя загрузить из стека сегментный регистр CS.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+pop	[bx]
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

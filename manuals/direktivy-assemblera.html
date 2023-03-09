@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">    <meta content="Справочник по директивам языка Ассемблера" property="og:description"/>
+    <meta content="article" property="og:type"/>    <title>Директивы Ассемблера - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Директивы Ассемблера</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <h2>Группа директив для указания&nbsp;типа процессора</h2>
+
+                <p>Директивы указания&nbsp;типа&nbsp;процессора задают набор используемых инструкций.</p>
+
+                <p><samp><strong>.186, .286, .386, .486, .586, .686</strong></samp>&nbsp;- использование инструкций
+                    процессоров&nbsp;80186, 80286, 80386, 80486, Pentium, Pentium Pro</p>
+
+                <p><samp><strong>.286P, .386P, .486P, .586P, .686P</strong></samp>&nbsp;- использование инструкций
+                    процессоров, включая инструкции защищенного режима</p>
+
+                <p><samp><strong>.287, .387</strong></samp>&nbsp;- использование инструкций математического сопроцессора
+                </p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+	; по-умолчанию в начале ставится режим .8086
+	.model small
+	.stack 100h
+	.code
+	.486	; указываем режим 80486, чтобы иметь возможность использовать команду BSWAP
+start:	mov	edx, 01020304h
+	bswap	edx
+	mov	ax, 4C00h
+	int	21h
+	end start
+</pre>                <h2>Директивы для указания сегментов</h2>
+
+                <p>Директива <small><strong>SEGMENT</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>name </em><strong>SEGMENT</strong>
+                    [align] [combine] [use] [&#39;class&#39;]
+                </div>
+
+                <p>Определяет сегмент с заданным именем <em>name</em>. Если сегмент с таким именем уже был определен
+                    ранее, то данный сегмент интерпретируется как продолжение предыдущего.</p>
+
+                <p>Необязательные параметры:</p>
+
+                <p><em>align</em> - определяет выравнивание начального адреса&nbsp;сегмента на границу, определяемую
+                    значением параметра.&nbsp;Возможные значения:</p>
+
+                <table border="1" cellpadding="3" cellspacing="1">
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">BYTE</td>
+                        <td>выравнивание не выполняется. Сегмент может начинаться с любого адреса памяти</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">WORD</td>
+                        <td>выравнивание на границу слова (2 байта)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">DWORD</td>
+                        <td>выравнивание на границу двойного слова (4 байта)</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">PARA</td>
+                        <td>выравнивание по границе&nbsp;параграфа (16 байт).&nbsp;<strong>Используется
+                            по-умолчанию</strong>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">PAGE</td>
+                        <td>выравнивание на границу в 256 байт</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><em>combine</em> - определяет, как сегменты с одним и тем же именем, но из различных модулей должны
+                    комбинироваться во время компоновки. Возможные значения:</p>
+
+                <table align="center" border="1" cellpadding="3" cellspacing="1" style="width:100%">
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">PUBLIC</td>
+                        <td>заставляет компоновщик соединить все сегменты с одинаковым именем. Новый объединенный
+                            сегмент будет целым и непрерывным. Все адреса (смещения) объектов&nbsp;будут вычисляться
+                            относительно начала этого нового сегмента
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">STACK</td>
+                        <td>выполняется конкатенация всех сегментов с одним и тем же именем для формирования одного
+                            непрерывного сегмента, затем регистр SS инициализируется значением начала сегмента, а SP -
+                            длиной сегмента. Если не указано ни одного сегмента стека, компоновщик выдаст
+                            предупреждение, что стековый сегмент не найден. Если сегмент стека создан, а комбинированный
+                            тип&nbsp;STACK&nbsp;не используется, программист должен явно загрузить в регистр&nbsp;SS&nbsp;адрес
+                            сегмента (подобно тому, как это делается для регистра&nbsp;DS)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">COMMON</td>
+                        <td>данный сегмент и все другие сегменты с этим именем помещаются по одному адресу. Все сегменты
+                            с данным именем будут перекрываться и совместно использовать память. Размер полученного в
+                            результате сегмента будет равен размеру самого большого сегмента
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">AT&nbsp;<em>address</em></td>
+                        <td>сегмент помещается по абсолютному адресу параграфа <em>address</em></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">PRIVATE</td>
+                        <td>данный сегмент не комбинируется с другими сегментами. <strong>Используется
+                            по-умолчанию</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><em>use</em> - определяет разрядность сегмента. Возможные значения:</p>
+
+                <table border="1" cellpadding="3" cellspacing="1">
+                    <tbody>
+                    <tr>
+                        <td>USE16</td>
+                        <td>сегмент с 16-разрядной&nbsp;адресацией. Максимальный размер сегмента 64 Кб</td>
+                    </tr>
+                    <tr>
+                        <td>USE32</td>
+                        <td>сегмент с 32-разрядной&nbsp;адресацией.&nbsp;Максимальный размер сегмента 4&nbsp;Гб. В
+                            модели памяти <strong>FLAT</strong> используется по-умолчанию
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><em>class</em> - задает строковое значение &quot;класса&quot; сегмента. Компоновщик объединяет вместе
+                    в памяти все сегменты с одним и тем же именем класса.</p>
+
+                <p>Директива <small><strong>ENDS</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>ENDS</strong></div>
+
+                <p>Определяет конец сегмента.</p>
+
+                <p>Директива <small><strong>ASSUME</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>ASSUME</strong>
+                    register:segment[,register:segment][, register:segment]...
+                </div>
+
+                <p>Задает сегментный регистр, который будет использоваться для вычисления действующего адреса для всех
+                    меток и переменных, определенных для сегмента или группы сегментов с указанным именем.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+	.386
+
+stack16	segment	stack
+	db	100 dup(0)
+	ends
+
+data16	segment
+var	db	0
+	ends
+
+code16	segment	use16 &#39;code&#39;
+	assume	cs:code16, ds:data16, ss:stack16
+start:
+	mov	var,00h
+	mov	ax,4C00h
+	int	21h
+	ends
+
+	end	start
+</pre>
+
+                <h2>Директивы для упрощенного указания сегментов</h2>
+
+                <p>Директива <small><strong>.MODEL</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>.MODEL </strong><em>memory-model
+                    [, language-type] [, stack-option]</em></div>
+
+                <p>Задает модель памяти&nbsp; для&nbsp; упрощенных&nbsp; директив&nbsp; определения сегментов.</p>
+
+                <p>Параметры:</p>
+
+                <p><em>memory-model </em>- модель памяти. Возможные значения:</p>
+
+                <table border="1" cellpadding="3" cellspacing="1" style="width:100%">
+                    <tbody>
+                    <tr>
+                        <td style="text-align:center">TINY</td>
+                        <td>Код, данные и стек объединены в одну группу с именем DGROUP и размером до 64 Кб.
+                            Используется для создания программ формата .com. Некоторые языки эту модель не поддерживают.
+                            СS=DS=SS=DGROUP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">SMALL</td>
+                        <td>Код занимает один сегмент, данные и стек объединены в одну группу с именем DGROUP (хотя для
+                            описания могут использоваться разные сегменты). Эту модель обычно используют для большинства
+                            программ на ассемблере. CS=_text DS=SS=DGROUP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">MEDIUM</td>
+                        <td>Код занимает несколько сегментов, по одному на каждый объединяемый программный модуль. Все
+                            ссылки на передачу управления &mdash; типа far (вызов подпрограмм). Данные и стек объединены
+                            в одной группе DGROUP; все ссылки на них &mdash; типа near (для доступа к данным
+                            используется только смещение). CS=&lt;модуль&gt;_text DS=SS=DGROUP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">COMPACT</td>
+                        <td>Код находится в одном сегменте, данные и стек в группе DGROUP и могут занимать несколько
+                            сегментов, так что для обращения к данным требуется указывать сегмент и смещение (ссылка на
+                            данные &mdash; типа far). CS=_text DS=SS=DGROUP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">LARGE</td>
+                        <td>Код может занимать несколько сегментов, по одному на каждый объединяемый программный модуль.
+                            Стек и данные находятся в группе DGROUP. Для ссылки на данные используются дальние указатели
+                            -far. CS=&lt;модуль&gt;_text DS=SS=DGROUP
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">HUGE</td>
+                        <td>То же, что модель LARGE</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center">FLAT</td>
+                        <td>То же, что и модель TINY, но для 32-битных сегментов</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><em>language-type </em>- тип языка программирования. Возможные значения:</p>
+
+                <table border="1" cellpadding="3" cellspacing="1">
+                    <tbody>
+                    <tr>
+                        <td>C</td>
+                        <td>Аргументы передаются через стек, справа налево.&nbsp;Стек очищает вызывающая программа.</td>
+                    </tr>
+                    <tr>
+                        <td>PASCAL,&nbsp;BASIC</td>
+                        <td>Аргументы передаются через стек, слева направо. Стек очищает вызываемая подпрограмма.</td>
+                    </tr>
+                    <tr>
+                        <td>STDCALL</td>
+                        <td>Аргументы передаются через стек, справа налево. Стек очищает вызываемая подпрограмма.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><em>stack-option </em>- организация стека. Возможные значения для 16 бит: <strong>NEARSTACK</strong>,
+                    <strong>FARSTACK</strong>. Для 32 бит не используется. Указание <strong>NEARSTACK</strong>
+                    группирует сегменты стека в один физический сегмент (DGROUP) вместе с данными. Регистр сегмента
+                    стека SS назначается на тот же адрес что и регистр&nbsp;сегмента данных DS.
+                    <strong>FARSTACK</strong>&nbsp;не группирует стек с сегментом данных DGROUP; таким образом регистр
+                    SS не будет равен регистру DS.</p>
+
+                <p>Директива&nbsp;<small><strong>.CODE</strong></small> или <small><strong>CODESEG</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>.CODE</strong><em>
+                    [имя]</em></div>
+
+                <p>Определяет начало сегмента кода.&nbsp;Если задали среднюю или большую модель памяти, то за&nbsp;
+                    директивой может следовать необязательное имя, которое указывает имя сегмента. По-умолчанию имя
+                    сегмента <strong>_TEXT</strong>.</p>
+
+                <p>Директива&nbsp;<small><strong>.DATA</strong></small> или <small><strong>DATASEG</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>.DATA</strong></div>
+
+                <p>Определяет начало инициализированного сегмента данных.</p>
+
+                <p>Директива&nbsp;<small><strong>.DATA?</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>.DATA?</strong>
+                </div>
+
+                <p>Определяет в модуле начало неинициализированного сегмента данных.</p>
+
+                <p>Директива&nbsp;<small><strong>.CONST</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>.CONST</strong>
+                </div>
+
+                <p>Определяет начало сегмента данных-констант.</p>
+
+                <p>Сегменты <strong>.DATA</strong>, <strong>.DATA?</strong>, <strong>.CONST</strong>&nbsp;помещаются в
+                    одну группу с именем <strong>DGROUP</strong></p>
+
+                <p>Директива&nbsp;<small><strong>.STACK</strong></small>&nbsp;или <small><strong>STACK</strong></small>
+                </p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>.STACK </strong><em>[размер]</em>
+                </div>
+
+                <p>Определяет начало сегмента стека, выделяя количество байт, заданное параметром. Если размер не
+                    указывается, выделяется 1024 байт.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+        .model small,stdcall
+        .stack  100h
+        .data
+str     db      &#39;Hello, world!&#39;,0
+        .code
+start:  mov     ax,4C00h
+        int     21h
+        end start
+</pre>
+
+                <h2>Группа директив для резервирования&nbsp;памяти</h2>
+
+                <p><strong>DB</strong>, <strong>DW</strong>, <strong>DD</strong>,
+                    <strong>DF</strong>,&nbsp;<strong>DP</strong>,&nbsp;<strong>DQ</strong>, <strong>DT</strong> -
+                    Резервирование памяти с размером соответственно 1 байт (DB), 2 байта (DW), 4 байта (DD), 6 байт (DF,
+                    DP), 8 байт (DQ)&nbsp;и 10 байт (DT)</p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>[имя]</em>
+                    <strong>DB</strong>&nbsp;<em>выражение[, выражение][, выражение]...</em></div>
+
+                <p>Резервирует область памяти, заданного директивой размера, с указанным именем, и инициализирует
+                    значением выражения. Выражение&nbsp;может быть числом, строкой символов, специальным символом &quot;<strong>?</strong>&quot;,
+                    а также выражением с использованием директивы&nbsp;<strong>DUP</strong>.</p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>счетчик</em>
+                    <strong>DUP</strong> (<em>выражение[, выражение]</em>...)
+                </div>
+
+                <p>Повторяет операцию выделения памяти для указанных данных столько раз, сколько задано значением
+                    счетчика</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+val1	dw	?
+val2	db	10 dup(0)
+val3	dd	4 dub(0FFFFFFFFh)
+val4	db	&#39;Test string&#39;,0
+val5	db	2 dup(0Fh), 4 dup(?)
+</pre>
+
+                <p>Директива <small><strong>STRUC</strong> (<strong>STRUCT</strong>)</small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>[имя]</em>
+                    <strong>STRUC</strong></div>
+
+                <p>Определяет структуру&nbsp;данных с заданным именем, содержащую поля.&nbsp;В каждом поле для
+                    определения его размера используются обычные директивы выделения данных (DB,&nbsp; DW и т.д.). Поля
+                    структуры могут быть именованными или нет.</p>
+
+                <p>Директива <small><strong>ENDS</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>[имя]</em><strong>
+                    ENDS</strong></div>
+
+                <p>Определяет конец структуры.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+str1	struc
+	db	10h
+field1	dw	?
+field2	db	5 dup(?)
+str1	ends
+</pre>
+
+                <p>Директива&nbsp;<small><strong>UNION</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>[имя]</em>&nbsp;<strong>UNION</strong>
+                </div>
+
+                <p>Определяет объединение структур данных, имеющих одно&nbsp;и то&nbsp;же имя. Объединение означает, что
+                    структуры будут располагаться по одному&nbsp;и тому же адресу&nbsp;в памяти.&nbsp; Закрытие
+                    объединений делается так же как и для структур - с помощью директивы <strong>ENDS</strong>.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+str1	union
+	db	?
+	db	?
+	db	2 dup(0)
+str1	ends
+
+str2	union
+	dw	?
+	dw	?
+str2	ends
+</pre>
+
+                <h2>Группа директив модификации размера указателей</h2>
+
+                <p>Используются когда возникает неоднозначность в размере&nbsp;операнда команды. Например когда в ячейку
+                    памяти записывается число, то компилятор не может определить число какого&nbsp;размера требуется
+                    записать, и в этом случае требуется укзать директиву модификации размера.</p>
+
+                <p><strong>BYTE</strong><strong>&nbsp;[PTR]</strong> -&nbsp;Приводит адресное выражение к размеру в байт
+                </p>
+
+                <p><strong>DWORD [PTR]</strong> -&nbsp;Приводит адресное выражение к размеру в двойное&nbsp;слово (4
+                    байта)</p>
+
+                <p><strong>FAR [PTR]</strong> -&nbsp;Приводит к тому, что адресное&nbsp;выражение&nbsp;будет дальним&nbsp;указателем
+                </p>
+
+                <p><strong>FWORD [PTR]</strong> -&nbsp;Приводит к тому, что адресное выражение&nbsp;будет иметь размер
+                    32-разрядного&nbsp;дальнего&nbsp;указателя</p>
+
+                <p><strong>NEAR [PTR]</strong> -&nbsp;Приводит к тому, что адресное выражение&nbsp;будет ближним
+                    указателем на код</p>
+
+                <p><strong>PWORD [PTR]</strong> -&nbsp;Приводит к тому, что адресное выражение&nbsp;будет иметь размер
+                    32-разрядного&nbsp;дальнего&nbsp;указателя</p>
+
+                <p><strong>QWORD [PTR]</strong> -&nbsp;Приводит к тому, что адресное выражение&nbsp;будет иметь размер
+                    четверного&nbsp;слова (8 байт)</p>
+
+                <p><strong>SHORT</strong> -&nbsp;Приводит к тому, что выражение будет указателем на код короткого типа
+                    (в границах -128 до +127 байт от текущего адреса программы)</p>
+
+                <p><strong>TBYTE&nbsp;[PTR]</strong> -&nbsp;Приводит к тому, что адресное выражение&nbsp;будет иметь
+                    размер 10 байт</p>
+
+                <p><strong>WORD [PTR]</strong> -&nbsp;Приводит адресное выражение к размеру в слово (2&nbsp;байта)</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+	mov	es:[di], dword ptr 0
+</pre>
+
+                <h2>Директивы определения процедур</h2>
+
+                <p>Директива <small><strong>PROC</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>имя</em>&nbsp;<strong>PROC</strong><em>
+                    [язык] [расстояние] [, аргумент] [, аргумент] ...</em></div>
+
+                <p>Определяет начало процедуры с указанным именем.</p>
+
+                <p>Необязательные параметры:</p>
+
+                <p><em>язык</em> -&nbsp;определяет, из какого языка выполняется вызов для доступа к данной процедуре:
+                    <strong>C</strong>, <strong>PASCAL</strong>, <strong>BASIC</strong>, <strong>STDCALL</strong>&nbsp;или
+                    <strong>NOLANGUAGE</strong>.&nbsp;Этим определяются соглашения по именам идентификаторов, порядок
+                    аргументов в стеке и то, останутся ли аргументы в стеке при возврате управления из процедуры (см.
+                    директиву <strong>MODEL</strong>). Если язык не задан, то используется язык заданный в директиве
+                    <strong>MODEL</strong>.</p>
+
+                <p><em>расстояние</em> -&nbsp;это значения <strong>NEAR</strong> или <strong>FAR</strong>. Оно
+                    определяет тип инструкций&nbsp;<strong>RET</strong> или <strong>RETF</strong>, которые&nbsp;будут
+                    использоваться в процедуре.</p>
+
+                <p><em>аргумент</em> - параметр процедуры в формате <em>имя[:тип]</em>, где <em>имя</em> - имя
+                    параметра, <em>тип</em> - тип параметра. В качестве параметра можно задать массив в виде
+                    <em><strong>имя[N]:тип</strong>.</em>&nbsp;Параметры будут доступны в процедуре через положительные
+                    смещения относительно регистра BP. Компилятор автоматически преобразует&nbsp;обращения к параметру
+                    по имени в соответствующие смещения относительно BP.</p>
+
+                <p>Директива <small><strong>ENDP</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><em>[имя]</em>&nbsp;<strong>ENDP</strong>
+                </div>
+
+                <p>Определяет окончание процедуры</p>
+
+                <p>Директива <small><strong>USES</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>USES </strong><em>элемент[,&nbsp;элемент]...</em>
+                </div>
+
+                <p>Показывает, какие регистры или элементы данных, состоящие из одной лексемы, вы хотите занести в стек
+                    в начале охватывающей процедуры. Перед возвратом управления из процедуры эти регистры будут
+                    извлекаться из стека. Вы должны использовать эту директиву перед первой инструкцией, которая
+                    генерирует в процедуре реальный код.</p>
+
+                <p>Директива <small><strong>LOCAL</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>LOCAL&nbsp;</strong><em>элемент[,&nbsp;элемент]...[=идентификатор]</em>
+                </div>
+
+                <p>В процедуре директива LOCAL определяет имена,&nbsp; которые доступны в стеке через отрицательные
+                    смещения относительно регистра BP. Если указан идентификатор, то ему присваивается количество байт,
+                    выделенных на локальные переменные (размер всего блока локальных переменных в байтах).</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+        .386
+        .model  small, stdcall
+        .stack  100h
+        .code
+test    proc    Param1:word, Param2[3]:word
+        uses    ax, bx
+        local   LocVar:word = @size
+        mov     ax, @size
+        mov     ax, LocVar
+        mov     ax, Param1
+        mov     ax, Param2[2]
+        ret
+test    endp
+
+start:  mov     ax, 4C00h
+        int     21h
+
+        end start
+</pre>
+
+                <p>&nbsp;</p>
+
+                <h2>Директивы для макроопределений</h2>
+
+                <p>Директива <small><strong>MACRO</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px">
+                    <em>имя </em><strong>MACRO</strong><em> [параметр][,&nbsp;параметр]...</em></div>
+
+                <p>Определяет начало макроопределения с указанным именем. У макроопредения могут быть заданы
+                    необязательные параметры, которые будут использоваться при подстановке тела макроопределения в текст
+                    программы.</p>
+
+                <p>При использовании макроопределения в программе, в параметры можно передавать строковые выражения,
+                    которые будут подставляться в тело макроопределения. Если передаваемая строка содержит пробелы или
+                    какие-то символы, вроде запятых, точек, то параметр можно заключить в угловые скобки
+                    &lt;...&gt;.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+        .386
+        .model  small, stdcall
+        .stack  100h
+        .data
+var     dw      0
+        .code
+MAddr   macro	sreg,reg,addr
+        mov     reg, seg addr
+        mov     sreg,reg
+        mov     reg, offset addr
+        endm
+
+start:  MAddr	ds,di,var
+        mov     ax, 4C00h
+        int     21h
+
+        end start
+</pre>
+
+                <p>Директива <small><strong>ENDM</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>ENDM</strong></div>
+
+                <p>Определяет окончание макроопределения</p>
+
+                <p>Директива <small><strong>REPT</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>REPT</strong> <em>выражение</em>
+                </div>
+
+                <p>Повторяет блок операторов, заданный между директивами&nbsp;<strong>REPT</strong> и
+                    <strong>ENDM</strong>&nbsp;столько раз, сколько задается выражением. Блок операторов должен
+                    заканчиваться директивой <strong>ENDM</strong>.</p>
+
+                <p>Директива <small><strong>IRP</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>IRP</strong><em>
+                    параметр, аргумент[. аргумент]...</em></div>
+
+                <p>Повторяет блок операторов, заданный между директивой <strong>IRP</strong> и <strong>ENDM</strong> со
+                    строковой подстановкой. Аргументами может быть любой текст: символы, строки, числа и т.д. Для
+                    каждого указанного аргумента ассемблирование блока операторов выполняется только один раз.&nbsp;При
+                    каждом ассемблировании блока для каждого вхождения &quot;параметра&quot; в операторах подставляется
+                    следующий аргумент в списке.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+	irp	reg,ax,bx
+	push	reg
+	endm
+	; после ассемблирования получится следующий код
+	push	ax
+	push	bx
+</pre>
+
+                <p>&nbsp;</p>
+
+                <h2>Другие директивы</h2>
+
+                <p>Директива <small><strong>COMMENT</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px">
+                    <strong>COMMENT </strong><em>[символ ограничитель] ... [символ ограничитель]</em></div>
+
+                <p>Позволяет задать многострочный комментарий, ограниченный с начала и с конца заданным
+                    символом-ограничителем.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+comment *
+  Несколько
+  строк
+  комментария
+*
+</pre>
+
+                <p>Директива <small><strong>EQU</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px">
+                    <em>имя </em><strong>EQU</strong><em> выражение</em></div>
+
+                <p>Определяет имя как строку, псевдоним или число, содержащие результат вычисления выражения.</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+var	equ	4000h
+mov	ax, var	; то же самое, что mov ax,4000h
+</pre>
+
+                <p>Директива <small><strong>END</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>END </strong><em>метка</em>
+                </div>
+
+                <p>Отмечает конец исполняемого модуля и задает начальный адрес, с которого будет исполняться
+                    программа.</p>
+
+                <p>Директива <small><strong>EVEN</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>EVEN</strong></div>
+
+                <p>Округляет счетчик адреса до следующего четного адреса</p>
+
+                <p>Директива <small><strong>SEG</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>SEG</strong><em>
+                    выражение</em></div>
+
+                <p>Возвращается адрес сегмента выражения&nbsp;со ссылкой на память</p>
+
+                <p>Директива <small><strong>OFFSET</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>OFFSET</strong><em>
+                    выражение</em></div>
+
+                <p>Возвращает смещение выражения в текущем сегменте (или в группе, которой принадлежит сегмент, если
+                    используются упрощенные директивы определения сегментов).</p>
+
+                <p>Директива <small><strong>ORG</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px">
+                    <strong>ORG&nbsp;</strong><em>выражение</em></div>
+
+                <p>Устанавливает счетчик инструкций в текущем сегменте в соответствии с адресом, задаваемым
+                    выражением.</p>
+
+                <p>Директива <small><strong>RADIX</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>RADIX</strong><em>
+                    основание</em></div>
+
+                <p>Задает основание системы счисления для целочисленных констант (2, 8, 10 или 16)</p>
+
+                <p>Директива <small><strong>SIZE</strong></small></p>
+
+                <div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px"><strong>SIZE</strong><em>
+                    имя</em></div>
+
+                <p>Возвращает размер элемента данных, выделенного для переменной</p>
+
+                <p>Пример кода:</p>
+
+                <pre class='code hljs x86asm'>
+	.data
+var	dw	4 dup(0)
+	.code
+	mov	ax,size var	;ax = 8
+</pre>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p></div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

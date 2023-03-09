@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команда JMP - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команда JMP</h1>
+                </div>                <div class='post-info'>
+                    <div class='pull-left post-info-time'>
+                        Опубликовано: 05.05.2017
+                    </div>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команда JMP - это безусловный переход на адрес, указанный с помощью операнда команды. Переход может
+                    быть как ближним, в пределах одного сегмента памяти, так и дальним, межсегментным переходом. Адрес
+                    перехода может задаваться как непосредственно с помощью меток, так и с помощью регистра, в котором
+                    находится адрес перехода. Также адрес перехода может находиться в ячейке памяти.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда JMP</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">JMP op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - i16, i32, i48, r/m16, r/m32, m48</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Безусловный переход</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Командa JMP передает управление по адресу, заданному операндом. В
+                            зависимости от типа операнда процессор трактует его значение по-разному:
+                            <ul class="zero">
+                                <li><b>Непосредственное значение</b><br/>
+                                    Трактуется процессором как смещение адреса перехода относительно следующей команды
+                                    или как адрес дальнего межсегментного перехода.
+                                </li>
+                                <li><b>Регистр</b><br/>
+                                    Его значение будет принято процессором в качестве адреса перехода в пределах
+                                    текущего сегмента.
+                                </li>
+                                <li><b>Ячейка памяти</b><br/>
+                                    В зависимости от размера ячейки памяти, процессор трактует содержимое этой ячейки
+                                    как адрес ближнего или дальнего перехода.
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+jmp	l1		;Ближний переход, непосредственное смещение
+jmp	l2		;Дальний переход, непосредственный адрес
+jmp	ax		;Ближний переход, адрес в регистре AX
+jmp	[bx]		;Ближний переход, адрес в ячейке памяти,
+			;адресуемой регистром BX
+jmp dword ptr [bx]	;Дальний переход, адрес в 32-битной ячейке памяти,
+			;адресуемой регистром BX
+l1:
+	...
+
+l2	label	far
+	...
+
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

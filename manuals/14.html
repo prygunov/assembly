@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды BT, BTC, BTS, BTR - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды BT, BTC, BTS, BTR</h1>
+                </div>                <div class='post-info'>
+                    <div class='pull-left post-info-time'>
+                        Опубликовано: 25.04.2017
+                    </div>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Группа команд BT, BTC, BTS и BTR используется для работы с отдельными битами своего операнда. Команда
+                    BT (Bit) позволяет получить состояние заданного бита своего операнда. Команды BTC (Bit Change), BTS
+                    (Bit Set), BTR (Bit Reset) также получают состояние заданного бита, но помимо этого еще выполняют
+                    некоторые действия над этим битом.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда BT</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">BT op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r16, r32, i8
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Проверка бита</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаг CF содержит значение проверяемого бита</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда BT позволяет получить значение определенного бита первого операнда.
+                            Номер проверяемого бита задается вторым операндом.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>
+                            <p>Номер бита, получаемый из второго операнда, берется по модулю 32, таким образом значение
+                                номера бита не может превысить 31.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+bt	edx,4
+bt	[eax],cx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда BTC</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">BTC op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r16, r32, i8
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Проверка бита и инвертирование</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаг CF содержит значение проверяемого бита</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда BTC позволяет получить значение определенного бита первого операнда,
+                            а затем инвертирует состояние этого бита в операнде. Номер проверяемого бита задается вторым
+                            операндом.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>
+                            <p>Номер бита, получаемый из второго операнда, берется по модулю 32, таким образом значение
+                                номера бита не может превысить 31.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+btc	edx,4
+btc	[eax],cx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда BTS</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">BTS op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r16, r32, i8
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Проверка бита и установка</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаг CF содержит значение проверяемого бита</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда BTS позволяет получить значение определенного бита первого операнда,
+                            а затем устанавливает значение этого бита равным единице. Номер проверяемого бита задается
+                            вторым операндом.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>
+                            <p>Номер бита, получаемый из второго операнда, берется по модулю 32, таким образом значение
+                                номера бита не может превысить 31.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+bts	edx,4
+bts	[eax],cx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда BTR</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">BTR op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r16, r32, i8
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Проверка бита и сброс</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаг CF содержит значение проверяемого бита</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда BTR позволяет получить значение определенного бита первого операнда,
+                            а затем сбрасывает этот бит в нулевое значение. Номер проверяемого бита задается вторым
+                            операндом.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>
+                            <p>Номер бита, получаемый из второго операнда, берется по модулю 32, таким образом значение
+                                номера бита не может превысить 31.</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+btr	edx,4
+btr	[eax],cx
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

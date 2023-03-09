@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Ассемблер. Компиляция и компоновка - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Ассемблер. Компиляция и компоновка</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>В этой статье мы рассмотрим процессы компиляции и компоновки программ на языке ассемблер для для
+                    операционных систем DOS и Windows. Напомню что компиляция - это процесс перевода файлов программы в
+                    так называемые объектные файлы. Объектные файлы - это файлы, в которых находится почти готовая
+                    программа в виде разрозненных кусков кода, связанных некоторой служебной информацией. Чтобы
+                    превратить эти куски кода в готовую программу используется компоновщик. Он выстраивает код в
+                    исполняемом файле в нужном порядке и создает готовый файл заданного формата. Этот получившийся файл
+                    уже можно исполнять.</p>                <p>Начнем с компиляции под DOS</p>
+
+                <p>В DOS существовало два вида исполняемых файлов: *.com и *.exe. Файлы *.com характеризуются тем, что
+                    весь код программы, данные и место для стека содержится в одном сегменте памяти, причем код
+                    программы должен находиться в сегменте со смещением в 256 байт (100h). Файлы формата *.exe не имеют
+                    ограничений на количество используемых сегментов памяти.</p>
+
+                <p>Для компиляции под DOS я использую компилятор MASM версии 6.11 и TASM версии 5.3</p>
+
+                <p>Компиляция и компоновка файлов *.com с помощью TASM:</p>
+
+                <pre>
+    \tasm32\bin\tasm53.exe test.asm, test.obj, test.lst /z /t /ml /m2 /l
+    \tasm32\bin\tlink.exe test.obj /x /t /3
+</pre>
+
+                <p>Компиляция и компоновка файлов *.exe с помощью TASM:</p>
+
+                <pre>
+    \tasm32\bin\tasm53.exe test.asm, test.obj, test.lst /z /t /ml /m2 /l
+    \tasm32\bin\tlink test.obj, test.exe /x /3
+</pre>
+
+                <p>Описание всех параметров можно получить, выполнив в командной строке tasm53.exe /? и tlink.exe
+                    /?<br/>
+                    &nbsp;</p>
+
+                <p>Компилятор MASM позволяет выполнять компиляцию и компоновку через вызов своей программы-оболочки
+                    ml.exe</p>
+
+                <p>Компиляция файлов *.com с помощью MASM:</p>
+
+                <pre>
+    \masm611\bin\ml.exe test.asm /AT /Fl /link
+</pre>
+
+                <p>Компиляция файлов *.exe с помощью MASM:</p>
+
+                <pre>
+    \masm611\bin\ml.exe test.asm /Fl /link
+</pre>
+
+                <p>Компиляция под Windows</p>
+
+                <p>Для компиляции под Windows используются компилятор MASM32 и TASM32.</p>
+
+                <p>Компиляция и компоновка файлов *.exe с помощью TASM32:</p>
+
+                <pre>
+    \tasm32\bin\tasm32.exe test.asm, test.obj, test.lst /zi /t /ml /m3 /q
+    \tasm32\bin\tlink32 /x /Tpe /ap /c /V4.0 test.obj, test.exe, , user32.lib</pre>
+
+                <p>Компиляция файлов *.exe с помощью MASM32:</p>
+
+                <pre>
+   \masm32\bin\ml.exe /c /coff test.asm
+   \masm32\bin\link.exe /SUBSYSTEM:WINDOWS test.obj
+</pre>
+
+                <p>После компиляции</p>
+
+                <p>После компиляции и компоновки у вас должен получиться исполняемый файл *.exe или *.com формата, в
+                    зависимости от того, какие параметры вы задавали компилятору.</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p></div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

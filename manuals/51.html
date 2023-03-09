@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды RCL и RCR - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды RCL и RCR</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды RCL и RCR выполняют побитовые сдвиги заданного значения через флаг CF. Команда RCL выполняет
+                    сдвиг влево, то есть в сторону старших битов, а команда RCR - сдвиг влево, то есть в сторону младших
+                    битов.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда RCL</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">RCL op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - i8, CL
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Циклический сдвиг влево через флаг переноса</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаг OF изменяется только в случае сдвига на 1 бит - он устанавливается, если
+                            изменилось значение старшего бита, и сбрасывается, если старший бит не изменился. Для
+                            сдвигов на несколько бит, флаг OF неопределен. Флаг CF содержит значение бита, который был в
+                            него помещен сдвигом. Остальные флаги не изменяются.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда RCL выполняет побитовый сдвиг операнда влево через флаг переноса.
+                            Старший бит операнда помещается во флаг CF, все биты операнда сдвигаются влево на место
+                            старших битов и предыдущее содержимое флага CF помещается в бит 0 операнда. Величина сдвига
+                            определяется вторым операндом<br/>
+                            <img src="../uploads/rcl.gif"/><br/>
+                            Использование в качестве второго операнда непосредственных значений больших 1 стало
+                            возможным только начиная с 80186 процессора.<br/>
+                            Начиная с 80286 процессоров у второго операнда учитываются только пять младших бит (значения
+                            от 0 до 31). Процессоры ниже 80286 учитывали все биты операнда.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	cl,4
+rcl	ax,cl
+jc	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда RCR</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">RCR op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - i8, CL
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Циклический сдвиг вправо через флаг переноса</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаг OF изменяется только в случае сдвига на 1 бит - он устанавливается, если
+                            изменилось значение старшего бита, и сбрасывается, если старший бит не изменился. Для
+                            сдвигов на несколько бит, флаг OF неопределен. Флаг CF содержит значение бита, который был в
+                            него помещен сдвигом. Остальные флаги не изменяются.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда RCR выполняет побитовый сдвиг операнда вправо через флаг переноса.
+                            Младший бит операнда помещается во флаг CF, все биты операнда сдвигаются вправо на место
+                            младших битов и предыдущее содержимое флага CF помещается в старший бит операнда. Величина
+                            сдвига определяется вторым операндом<br/>
+                            <img src="../uploads/rcr.gif"/><br/>
+                            Использование в качестве второго операнда непосредственных значений больших 1 стало
+                            возможным только начиная с 80186 процессора.<br/>
+                            Начиная с 80286 процессоров у второго операнда учитываются только пять младших бит (значения
+                            от 0 до 31). Процессоры ниже 80286 учитывали все биты операнда.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	cl,12
+rcr	ax,cl
+jc	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды IN и OUT - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды IN и OUT</h1>
+                </div>                <div class='post-info'>
+                    <div class='pull-left post-info-time'>
+                        Опубликовано: 04.05.2017
+                    </div>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды IN и OUT используются для работы с внешними устройствами через порты ввода-вывода. Команда IN
+                    принимает данные из порта, а команда OUT записывает данные в порт. Номер порта может задаваться как
+                    числом от 0 до 255, так и значением регистра от 0 до 65535. Читать из порта или записывать в порт
+                    можно как 8-битные, так и 16- и 32-битные данные.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда IN</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">IN op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - AL, AX, EAX<br/>
+                            <b class="ops">op2</b> - i8, DX
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Ввод из порта</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда IN пересылает байт, слово или двойное слово из заданного числом во
+                            втором операнде порта в регистр (AL, AX или EAX), заданный первым операндом. Доступ к любому
+                            порту от 0 до 65535 выполняется путем помещения номера порта в регистр DX и использования
+                            команды IN с регистром DX в качестве второго параметра. Эти команды ввода/вывода могут быть
+                            несколько короче при использовании ввода/вывода через 8-битовый порт в команде. Старшие
+                            восемь битов адреса порта при использовании ввода/вывода через 8-битовый порт будут равны 0.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	dx,03DFh
+in	al,dx
+in	ax,60h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда OUT</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">OUT op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - i8, DX<br/>
+                            <b class="ops">op2</b> - AL, AX, EAX
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Ввод из порта</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда OUT пересылает байт, слово или двойное слово из заданного вторым
+                            операндом регистра (AL, AX или EAX) в выходной порт, номер которого задан первым операндом.
+                            Доступ к любому порту от 0 до 65535 выполняется путем помещения номера порта в регистр DX и
+                            использования команды OUT с регистром DX в качестве первого операнда. Если команда содержит
+                            идентификатор 8-битового порта, то значение расширяется нулем до 16 битов.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+sub	ax,ax
+mov	dx,03DFh
+out	dx,ax
+out	60h,al
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

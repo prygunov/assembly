@@ -1,0 +1,1911 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <meta content="Регистры микропроцессоров Intel" property="og:title"/>
+    <meta content="" property="og:description"/>
+    <meta content="article" property="og:type"/>
+
+
+    <title>Регистры микропроцессоров Intel - </title>    <!-- Fonts -->
+    <link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet">
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Регистры микропроцессоров Intel</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>По назначению и способу использования регистры процессоров Intel можно разбить на группы:</p>                <ul>
+                    <li><a href="registry-mikroprocessorov-intel.html#ron">регистры общего назначения</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#seg">сегментные регистры</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#flg">регистр флагов</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#eip">регистр указателя команд</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#mem">регистры управления памятью</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#cpu">регистры управления процессором</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#dbg">отладочные регистры</a></li>
+                    <li><a href="registry-mikroprocessorov-intel.html#mmx">регистры MMX</a></li>
+                </ul>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="ron" name="ron"></a>Регистры общего назначения</span></p>
+
+                <p>Как следует из названия, эти регистры могут использоваться для любых целей.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name" rowspan="3"><strong>EAX</strong></td>
+                        <th colspan="16" rowspan="2">&nbsp;</th>
+                        <th colspan="16">AX</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">AH</th>
+                        <th colspan="8">AL</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="3"><strong>EBX</strong></td>
+                        <th colspan="16" rowspan="2">&nbsp;</th>
+                        <th colspan="16">BX</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">BH</th>
+                        <th colspan="8">BL</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="3"><strong>ECX</strong></td>
+                        <th colspan="16" rowspan="2">&nbsp;</th>
+                        <th colspan="16">CX</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">CH</th>
+                        <th colspan="8">CL</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="3"><strong>EDX</strong></td>
+                        <th colspan="16" rowspan="2">&nbsp;</th>
+                        <th colspan="16">DX</th>
+                    </tr>
+                    <tr>
+                        <th colspan="8">DH</th>
+                        <th colspan="8">DL</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>ESI</strong></td>
+                        <th colspan="16">&nbsp;</th>
+                        <th colspan="16">SI</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>EDI</strong></td>
+                        <th colspan="16">&nbsp;</th>
+                        <th colspan="16">DI</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>EBP</strong></td>
+                        <th colspan="16">&nbsp;</th>
+                        <th colspan="16">BP</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>ESP</strong></td>
+                        <th colspan="16">&nbsp;</th>
+                        <th colspan="16">SP</th>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>Хотя эти регистры и могут использоваться для различных целей, но часть из них используются при
+                    выполнении некоторых специфичных действий:</p>
+
+                <p>Регистр ESP используется в качестве указателя стека, и с ним работают команды PUSH, POP и т.п.</p>
+
+                <p>Регистр ECX используется в качестве счетчика цикла в командах LOOP.</p>
+
+                <p>Регистры ESI и EDI используются как индексные регистры при работе со строковыми командами.</p>
+
+                <p>Для каждого 32-разрядного регистра общего назначения можно обращаться к его младшей половине как к
+                    отдельному 16-разрядному регистру (AX, BX, CX, DX, SI, DI, BP, SP). Кроме того к старшим и младшим
+                    половинам регистров AX, BX, CX и DX можно обращаться как к 8-разрядным регистрам (AH, AL, BH, BL,
+                    CH, CL, DH, DL).</p>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="seg" name="seg"></a>Сегментные регистры</span></p>
+
+                <p>Все обращения к памяти происходят через один из шести сегментных регистров: CS, DS, ES, GS, FS и SS.
+                    В этих регистрах хранятся 16-разрядные селекторы сегментов. Регистры CS и SS закреплены за
+                    сегментами кода и стека соответственно. Остальные сегментные регистры могут использоваться для любых
+                    целей, однако регистры DS и ES используются командами, работающими со строками, а регистр DS
+                    по-умолчанию используется при обращении к данным.</p>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="flg" name="flg"></a>Регистр флагов</span></p>
+
+                <p>Регистр флагов FLAGS (EFLAGS в 32-разрядном процессоре) - это специальный регистр, отображающий
+                    состояние процессора на момент выполнения команды.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">ID</td>
+                        <td class="text-center">VIP</td>
+                        <td class="text-center">VIF</td>
+                        <td class="text-center">AC</td>
+                        <td class="text-center">VM</td>
+                        <td class="text-center">RF</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">NT</td>
+                        <td class="text-center">IOPL</td>
+                        <td class="text-center">OF</td>
+                        <td class="text-center">DF</td>
+                        <td class="text-center">IF</td>
+                        <td class="text-center">TF</td>
+                        <td class="text-center">SF</td>
+                        <td class="text-center">ZF</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">AF</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">PF</td>
+                        <td class="text-center">1</td>
+                        <td class="text-center">CF</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table>
+                    <tbody>
+                    <tr valign="top">
+                        <td width="70"><b>
+                            <nobr>биты 31-22:</nobr>
+                        </b></td>
+                        <td>Зарезервированы.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 21:</nobr>
+                        </b></td>
+                        <td>Флаг идентификации ID. Если программа смогла установить или сбросить этот флаг, то это
+                            означает, что процессор поддерживает инструкцию CPUID.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 20:</nobr>
+                        </b></td>
+                        <td>Флаг ожидания виртуального прерывания VIP (P5+). Этот флаг указывает процессору, что
+                            произошло аппаратное прерывание. Флаги VIF и VIP используются в многозадачных средах для
+                            того, чтобы каждая задача имела собственный виртуальный образ флага IF.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 19:</nobr>
+                        </b></td>
+                        <td>Флаг виртуального прерывания VIF (P5+).</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 18:</nobr>
+                        </b></td>
+                        <td>Флаг контроля выравнивания AC (486+). Если установить этот флаг и флаг AM в регистре CR0,
+                            каждое обращение к памяти из программ, выполняющихся с CPL = 3, не выровненное на границу
+                            слова для слов и на границу двойного слова для двойных слов, будет вызывать исключение #АС.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 17:</nobr>
+                        </b></td>
+                        <td>Флаг режима V86 (386+).</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 16:</nobr>
+                        </b></td>
+                        <td>Флаг возобновления RF. Когда этот флаг равен 1, отладочные исключения временно запрещены.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 15:</nobr>
+                        </b></td>
+                        <td>Зарезервирован.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 14:</nobr>
+                        </b></td>
+                        <td>Флаг вложенной задачи NT (286+). Этот флаг устанавливается в 1, если текущая задача является
+                            вложенной по отношению к какой-то другой &mdash; в обработчиках прерываний и исключений и
+                            вызванных командой call задачах. Флаг влияет на работу команды IRET.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 13-12:</nobr>
+                        </b></td>
+                        <td>Уровень привилегий ввода-вывода IOPL (286+). Уровень привилегий ввода-вывода, с которым
+                            выполняется текущая программа или задача
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 11:</nobr>
+                        </b></td>
+                        <td>Флаг переполнения OF. Этот флаг устанавливается в 1, если результат предыдущей
+                            арифметической операции над числами со знаком выходит за допустимые для них пределы.
+                            Например, если при сложении двух положительных чисел получается число со старшим битом,
+                            равным единице (то есть отрицательное) и наоборот.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 10:</nobr>
+                        </b></td>
+                        <td>Флаг направления DF. Этот флаг контроллирует поведение команд обработки строк &mdash; когда
+                            он установлен в 1, строки обрабатываются в сторону уменьшения адресов, а когда DF = 0
+                            &mdash; наоборот.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 9:</nobr>
+                        </b></td>
+                        <td>Флаг разрешения прерываний IF. Установка этого флага в 1 приводит к тому, что процессор
+                            перестает обрабатывать прерывания от внешних устройств. Обычно его устанавливают на короткое
+                            время для выполнения критических участков кода.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 8:</nobr>
+                        </b></td>
+                        <td>Флаг трассировки TF. Этот флаг был предусмотрен для работы отладчиков, не использующих
+                            защищенный режим. Установка его в 1 приводит к тому, что после выполнения каждой команды
+                            программы управление временно передается отладчику (вызывается прерывание 01h).
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 7:</nobr>
+                        </b></td>
+                        <td>Флаг знака SF. Этот флаг всегда равен старшему биту результата.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 6:</nobr>
+                        </b></td>
+                        <td>Флаг нуля ZF. Устанавливается в 1, если результат предыдущей команды &mdash; ноль.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 5:</nobr>
+                        </b></td>
+                        <td>Зарезервирован</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 4:</nobr>
+                        </b></td>
+                        <td>Флаг вспомогательного переноса AF. Флаг полупереноса или вспомогательного переноса.
+                            Устанавливается в 1, если в результате предыдущей операции произошел перенос (или заем) из
+                            третьего бита в четвертый. Этот флаг используется автоматически командами двоично-десятичной
+                            коррекции.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 3:</nobr>
+                        </b></td>
+                        <td>Зарезервирован</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 2:</nobr>
+                        </b></td>
+                        <td>Флаг четности PF. Устанавливается в 1, если младший байт результата предыдущей команды
+                            содержит четное число бит, равных 1; устанавливается в 0, если число единичных бит нечетное.
+                            (Это не то же самое, что делимость на два. Число делится на два без остатка, если его самый
+                            младший бит равен нулю, и не делится, если он равен 1.).
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 1:</nobr>
+                        </b></td>
+                        <td>Зарезервирован</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 0:</nobr>
+                        </b></td>
+                        <td>Флаг переноса CF. Устанавливается в 1, если результат предыдущей операции не уместился в
+                            приемнике и произошел перенос из старшего бита или если требуется заем (при вычитании),
+                            иначе устанавливается в 0.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="eip" name="eip"></a>Регистр указателя команд</span></p>
+
+                <p>Регистр указателя команд IP (или EIP в 32-разрядных процессорах) - это специальный регистр
+                    процессора, указывающий на ячейку памяти, где находится следующая выполняемая команда. Значение
+                    этого регистра нельзя изменить явным образом, с помощью команд присваивания. Единственные команды,
+                    влияющие на его значение - это команды перехода (JMP, JE, JNC, ...) и команды вызова и возврата из
+                    процедур (CALL, INT, RET, ...).</p>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="mem" name="mem"></a>Регистры управления памятью</span></p>
+
+                <p>Эти регистры используются для указания положения структур данных, ответственных за сегментацию в
+                    защищенном режиме.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name" rowspan="2"><b>GDTR</b></td>
+                        <td colspan="32">Linear address</td>
+                        <td colspan="16">Limit</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">47</td>
+                        <td class="bit">46</td>
+                        <td class="bit">45</td>
+                        <td class="bit">44</td>
+                        <td class="bit">43</td>
+                        <td class="bit">42</td>
+                        <td class="bit">41</td>
+                        <td class="bit">40</td>
+                        <td class="bit">39</td>
+                        <td class="bit">38</td>
+                        <td class="bit">37</td>
+                        <td class="bit">36</td>
+                        <td class="bit">35</td>
+                        <td class="bit">34</td>
+                        <td class="bit">33</td>
+                        <td class="bit">32</td>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>GDTR (Global Descriptor Table Register)</i>: 6-байтный регистр, в котором содержатся 32-битный
+                    линейный адрес начала таблицы глобальных дескрипторов (GDT) и ее 16-битный размер (минус 1). Каждый
+                    раз, когда происходит обращение к памяти, по селектору, находящемуся в сегментном регистре,
+                    определяется дескриптор из таблицы GDT или LDT, в котором записан адрес начала сегмента и другая
+                    информация.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name" rowspan="2"><b>IDTR</b></td>
+                        <td colspan="32">Linear address</td>
+                        <td colspan="16">Limit</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">47</td>
+                        <td class="bit">46</td>
+                        <td class="bit">45</td>
+                        <td class="bit">44</td>
+                        <td class="bit">43</td>
+                        <td class="bit">42</td>
+                        <td class="bit">41</td>
+                        <td class="bit">40</td>
+                        <td class="bit">39</td>
+                        <td class="bit">38</td>
+                        <td class="bit">37</td>
+                        <td class="bit">36</td>
+                        <td class="bit">35</td>
+                        <td class="bit">34</td>
+                        <td class="bit">33</td>
+                        <td class="bit">32</td>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>IDTR (Interrupt Descriptor Table Register)</i>: 6-байтный регистр, в котором содержатся 32-битный
+                    линейный адрес начала таблицы глобальных дескрипторов обработчиков прерываний (IDT) и ее 16-битный
+                    размер (минус 1). Каждый раз, когда происходит прерывание или исключение, процессор передает
+                    управление на обработчик, описываемый дескриптором из IDT с соответствующим номером.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name" rowspan="2"><b>LDTR</b></td>
+                        <td colspan="16">Selector</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>LDTR (Local Descriptor Table Register)</i>: 16-битный регистр, в котором содержится селектор для
+                    GDT, описывающий текущую таблицу локальных дескрипторов (LDT).</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name" rowspan="2"><b>TR</b></td>
+                        <td colspan="16">Selector</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>TR (Task Register)</i>: 16-битный регистр, в котором содержится селектор для GDT, описывающий TSS
+                    текущей задачи.</p>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="cpu" name="cpu"></a>Регистры управления процессором</span></p>
+
+                <p>Пять 32-битных регистров CR0 &ndash; CR4 управляют функционированием процессора и работой отдельных
+                    его внутренних блоков.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>CR0</strong></td>
+                        <td>PG</td>
+                        <td>CD</td>
+                        <td>NW</td>
+                        <td colspan="10">-</td>
+                        <td>AM</td>
+                        <td>-</td>
+                        <td>WP</td>
+                        <td colspan="10">-</td>
+                        <td>NE</td>
+                        <td>ET</td>
+                        <td>TS</td>
+                        <td>EM</td>
+                        <td>MP</td>
+                        <td>PE</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>CR0 (Control Register 0)</i>: 32-битный регистр, содержащий флаги управления процессором:</p>
+
+                <table>
+                    <tbody>
+                    <tr valign="top">
+                        <td width="50"><b>
+                            <nobr>бит 31:</nobr>
+                        </b></td>
+                        <td>Флаг страничной адресации PG (386+). Если бит установлен, то включен режим страничной
+                            адресации.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>
+                            <nobr>бит 30:</nobr>
+                        </b></td>
+                        <td>Флаг отключения кэширования CD (486+). Если флаг установлен, то отключается запись в кэш 1
+                            уровня. Считывание из кэша все равно будет происходить.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 29:</nobr>
+                        </b></td>
+                        <td>Флаг сквозного кэширования NW (486+). Если флаг установлен, то отключается сквозная запись
+                            во внутренний кэш, то есть данные, записываемые в кэш, не появляются на внешних выводах
+                            процессора.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 18:</nobr>
+                        </b></td>
+                        <td>Флаг контроля выравнивания AM (486+). Если флаг установлен, то флагу АС разрешается включать
+                            режим выравнивания данных.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 16:</nobr>
+                        </b></td>
+                        <td>Флаг защиты от записи WP (486+). Если флаг установлен, то запрещается запись в страницы,
+                            помеченные как только для чтения на всех уровнях привилегий
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 5:</nobr>
+                        </b></td>
+                        <td>Флаг ошибки сопроцессора NE (486+). Если флаг установлен, то процессор при возникновении
+                            ошибки в операциях с плавающей точкой генерирует соответствующее исключение. Если флаг
+                            сброшен, то процессор генерирует прерывание, которое должно обрабатываться внешним
+                            контроллером прерываний.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 4:</nobr>
+                        </b></td>
+                        <td>Флаг типа сопроцессора ET (386, 486). Если флаг сброшен, то это означает, что используется
+                            внешний сопроцессор. Если флаг установлен, то сопроцессор - встроенный. На всех новых
+                            процессорах этот флаг равен 1.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 3:</nobr>
+                        </b></td>
+                        <td>Флаг переключенния задачи TS (286+). Процессор устанавливает этот флаг после переключения
+                            задачи. Если после этого выполнить любую команду сопроцессора, то процессор сгенерирует
+                            исключение.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 2:</nobr>
+                        </b></td>
+                        <td>Флаг эмуляции сопроцессора EM (286+). Если флаг установлен, то каждая команда сопроцессора
+                            будет вызывать исключение.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 1:</nobr>
+                        </b></td>
+                        <td>Флаг наличия сопроцессора MP (286+). Этот флаг влияет на выполнение команд WAIT и FWAIT.
+                            Должен быть установлен для совместимости с программами, написанными для 80286 и 80386 и
+                            использующими эту команду.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 0:</nobr>
+                        </b></td>
+                        <td>Флаг защищенного режима PE (286+). Если флаг установлен, то процессор переключается в
+                            защищенный режим работы.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>CR1</strong></td>
+                        <td colspan="32">-</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>CR1 (Control Register 1)</i>: Зарезервирован.</p>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>CR2</strong></td>
+                        <td colspan="32">Page-Fault Linear Address</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>CR2 (Control Register 2)</i>: 32-битный регистр, содержащий линейный адрес, вызвавший исключение
+                    &quot;ошибка страницы&quot;. Код ошибки, запоминаемый при возникновении исключения сохраняется в
+                    стеке обработчика страничного нарушения.</p>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>CR3</strong></td>
+                        <td colspan="20">Page-Directory Base</td>
+                        <td colspan="7">-</td>
+                        <td>PCD</td>
+                        <td>PWT</td>
+                        <td colspan="3">-</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>CR3 (Control Register 3)</i>: 32-битный регистр, содержащий физический адрес корневого каталога
+                    страниц памяти (биты 31-11, если флаг PAE в регистре CR4 сброшен; биты 31-5, если флаг PAE в
+                    регистре CR4 установлен), а также биты по управлению кэшированием страниц памяти:</p>
+
+                <table>
+                    <tbody>
+                    <tr valign="top">
+                        <td width="50"><b>бит 4:</b></td>
+                        <td>Флаг запрещения кэширования страниц PCD (486+). Если бит установлен, то текущая страница не
+                            будет загружена в кэш.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>бит 3:</b></td>
+                        <td>Флаг сквозного кэширования страниц PWT (486+). Этот флаг управляет методом записи страниц во
+                            внешний кэш.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>CR4</strong></td>
+                        <td colspan="21">-</td>
+                        <td>FPE</td>
+                        <td>FSR</td>
+                        <td>PCE</td>
+                        <td>PGE</td>
+                        <td>MCE</td>
+                        <td>PAE</td>
+                        <td>PSE</td>
+                        <td>DE</td>
+                        <td>TSD</td>
+                        <td>PVI</td>
+                        <td>VME</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p><i>CR4 (Control Register 4)</i>: 32-битный регистр, управляющий использованием архитектурных
+                    расширений процессоров Pentium и более новых. Наличие этих расширений необходимо проверять при
+                    помощи команды CPUID:</p>
+
+                <table>
+                    <tbody>
+                    <tr valign="top">
+                        <td width="50"><b>
+                            <nobr>бит 10:</nobr>
+                        </b></td>
+                        <td>Флаг поддержки операционной системой исключений XMM (PIII+). Если бит установлен, то
+                            разрешается генерация исключения #19 (ошибка SIMD). Если бит сброшен, будет генерироваться
+                            исключение #6 (недействительный код операции).
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 9:</nobr>
+                        </b></td>
+                        <td>Флаг поддержки команд FXSAVE/FXRSTOR (PII+). Этот флаг разрешает командам FXSAVE и FXRESTOR,
+                            сохранять и восстанавливать контекст XMM.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 8:</nobr>
+                        </b></td>
+                        <td>Флаг разрешения команды RDPMC (P6+). Если этот флаг установлен, то выполнение команды RDPMC
+                            разрешено на всех уровнях привилегий. Если этот флаг сброшен, то выполнение команды RDPMC
+                            разрешено только на нулевом уровне привилегий.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 7:</nobr>
+                        </b></td>
+                        <td>Флаг разрешения глобальности PGE (P6+). Если этот флаг установлен, то для элементов таблиц
+                            страниц допускается использование бита 8 (атрибут глобальности страницы).
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 6:</nobr>
+                        </b></td>
+                        <td>Флаг разрешения машинного контроля MCE (P5+). Если флаг установлен, то разрешается
+                            генерирование исключения #19, возникающего, когда блок внутреннего контроля операций
+                            обнаруживает ошибку.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 5:</nobr>
+                        </b></td>
+                        <td>Флаг расширения физического адреса PAE (P6+). Если флаг установлен, то включается режим
+                            36-битного физического адресного пространства.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 4:</nobr>
+                        </b></td>
+                        <td>Флаг расширения размера страниц PSE (P5+). Если флаг установлен, то включается режим
+                            адресации с 4-мегабайтными страницами памяти.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 3:</nobr>
+                        </b></td>
+                        <td>Флаг расширенной отладки DE (P5+). Позволяет устанавливать отладочные точки останова на
+                            обращение к портам ввода-вывода. Если флаг установлен, то любое обращение к регистрам DR4 и
+                            DR5 вызовет исключение #06 (недопустимый код операции). Если бит сброшен, то обращение к
+                            регистрам DR4 и DR5 приведет к обращению к регистрам DR6 и DR7 соответственно.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 2:</nobr>
+                        </b></td>
+                        <td>Флаг запрещения счетчика времени RDTSC (P5+). Если флаг установлен, то выполнение команды
+                            RDTSC возможно только на нулевом уровне привилегий. Если флаг сброшен, то выполнение команды
+                            RDTSC возможно на всех уровнях привилегий.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 1:</nobr>
+                        </b></td>
+                        <td>Флаг поддержки VIF (P5+). Если флаг установлен, то разрешается использование флага VIF.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 0:</nobr>
+                        </b></td>
+                        <td>Флаг расширения виртуального режима VME (P5+). Если флаг установлен, то включается
+                            расширенная обработка прерываний и исключений в состоянии V86
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="dbg" name="dbg"></a>Отладочные регистры</span></p>
+
+                <p>Восемь 32-разрядных регистров DR0-DR7 расширяют возможности по отладке программ на микропроцессорах
+                    Intel, начиная с 386 модели. Они устанавливают точки останова по данным и позволяют устанавливать
+                    точки останова по командам без модификации кода программ.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>
+                            <nobr>DR0-DR3</nobr>
+                        </strong></td>
+                        <td colspan="32">Линейный адрес точки останова</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Регистры DR0-DR3 содержат 32-битные линейные адреса четырех возможных точек останова по доступу к
+                    памяти.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>
+                            <nobr>DR4-DR5</nobr>
+                        </strong></td>
+                        <td colspan="32">-</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Регистры DR4-DR5 зарезервированы. На процессорах до Pentium, или если бит DE регистра CR4 равен нулю,
+                    обращение к этим регистрам приводит к обращению к DR6 и DR7 соответственно. Если бит DE = 1,
+                    происходит исключение #06 (недопустимая операция).</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>
+                            <nobr>DR6</nobr>
+                        </strong></td>
+                        <td colspan="16">1</td>
+                        <td>BT</td>
+                        <td>BS</td>
+                        <td>BD</td>
+                        <td>0</td>
+                        <td colspan="8">1</td>
+                        <td>B3</td>
+                        <td>B2</td>
+                        <td>B1</td>
+                        <td>B0</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Регистр DR6: 32-разрядный регистр состояния отладки. Он содержит информацию о причине отладочного
+                    останова для обработчика исключения #01 (отладочное прерывание):</p>
+
+                <table>
+                    <tbody>
+                    <tr valign="top">
+                        <td width="70"><b>
+                            <nobr>биты 31-16:</nobr>
+                        </b></td>
+                        <td>Зарезервированы. Должны быть 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 15:</nobr>
+                        </b></td>
+                        <td>Если флаг BT установлен, то причина прерывания - установленный отладочный бит в TSS задачи,
+                            в которую произошло переключение.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 14:</nobr>
+                        </b></td>
+                        <td>Если флаг BS установлен, то причина прерывания - установленный флаг трассировки TF в
+                            регистре EFLAGS.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 13:</nobr>
+                        </b></td>
+                        <td>Если флаг BD установлен, то причина прерывания - попытка обращения программы к отладочным
+                            регистам при установленном бите GD регистра DR7.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 12:</nobr>
+                        </b></td>
+                        <td>Зарезервирован. Должен быть 0.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 11-4:</nobr>
+                        </b></td>
+                        <td>Зарезервированы. Должны быть 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 3:</nobr>
+                        </b></td>
+                        <td>Если флаг B3 установлен, то причина прерывания - точка останова 3.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 2:</nobr>
+                        </b></td>
+                        <td>Если флаг B2 установлен, то причина прерывания - точка останова 2.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 1:</nobr>
+                        </b></td>
+                        <td>Если флаг B1 установлен, то причина прерывания - точка останова 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 0:</nobr>
+                        </b></td>
+                        <td>Если флаг B0 установлен, то причина прерывания - точка останова 0.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Процессор не очищает биты причин прерывания в этом регистре, так что обработчику исключения следует
+                    делать это самостоятельно. Кроме того, одновременно может произойти прерывание из-за нескольких
+                    причин,тогда несколько бит будут установлены.</p>
+
+                <table class="reg">
+                    <tbody>
+                    <tr>
+                        <td class="reg_name text-center" rowspan="2"><strong>
+                            <nobr>DR7</nobr>
+                        </strong></td>
+                        <td colspan="2">LEN3</td>
+                        <td colspan="2">R/W3</td>
+                        <td colspan="2">LEN2</td>
+                        <td colspan="2">R/W2</td>
+                        <td colspan="2">LEN1</td>
+                        <td colspan="2">R/W1</td>
+                        <td colspan="2">LEN0</td>
+                        <td colspan="2">R/W0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>GD</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>GE</td>
+                        <td>LE</td>
+                        <td>G3</td>
+                        <td>L3</td>
+                        <td>G2</td>
+                        <td>L2</td>
+                        <td>G1</td>
+                        <td>L1</td>
+                        <td>G0</td>
+                        <td>L0</td>
+                    </tr>
+                    <tr>
+                        <td class="bit">31</td>
+                        <td class="bit">30</td>
+                        <td class="bit">29</td>
+                        <td class="bit">28</td>
+                        <td class="bit">27</td>
+                        <td class="bit">26</td>
+                        <td class="bit">25</td>
+                        <td class="bit">24</td>
+                        <td class="bit">23</td>
+                        <td class="bit">22</td>
+                        <td class="bit">21</td>
+                        <td class="bit">20</td>
+                        <td class="bit">19</td>
+                        <td class="bit">18</td>
+                        <td class="bit">17</td>
+                        <td class="bit">16</td>
+                        <td class="bit">15</td>
+                        <td class="bit">14</td>
+                        <td class="bit">13</td>
+                        <td class="bit">12</td>
+                        <td class="bit">11</td>
+                        <td class="bit">10</td>
+                        <td class="bit">9</td>
+                        <td class="bit">8</td>
+                        <td class="bit">7</td>
+                        <td class="bit">6</td>
+                        <td class="bit">5</td>
+                        <td class="bit">4</td>
+                        <td class="bit">3</td>
+                        <td class="bit">2</td>
+                        <td class="bit">1</td>
+                        <td class="bit">0</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>Регистр DR7: 32-разрядный регистр, задающий условие для точек останова:</p>
+
+                <table>
+                    <tbody>
+                    <tr valign="top">
+                        <td width="70"><b>
+                            <nobr>биты 31-30:</nobr>
+                        </b></td>
+                        <td>Размер точки останова 3.<br/>
+                            00 - 1 байт<br/>
+                            01 - 2 байта<br/>
+                            10 - зарезервировано<br/>
+                            11 - 4 байта
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 29-28:</nobr>
+                        </b></td>
+                        <td>Тип точки останова 3.<br/>
+                            00 - на выполнение команды<br/>
+                            01 - на запись<br/>
+                            10 - на порт ввода-вывода (при установленном бите DE регистра CR4)<br/>
+                            11 - на чтение/запись
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 27-26:</nobr>
+                        </b></td>
+                        <td>Размер точки останова 2.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 25-24:</nobr>
+                        </b></td>
+                        <td>Тип точки останова 2.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 23-22:</nobr>
+                        </b></td>
+                        <td>Размер точки останова 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 21-20:</nobr>
+                        </b></td>
+                        <td>Тип точки останова 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 19-18:</nobr>
+                        </b></td>
+                        <td>Размер точки останова 0.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 17-16:</nobr>
+                        </b></td>
+                        <td>Тип точки останова 0.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 15-14:</nobr>
+                        </b></td>
+                        <td>Зарезервированы. Должны быть 0.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 13:</nobr>
+                        </b></td>
+                        <td>Флаг защиты отладочных регистров GD. Если флаг установлен, то включается режим, при котором
+                            обращение к любому отладочному регистру, даже из уровня привилегий 0, вызывает исключение
+                            #01. Этот бит автоматически сбрасывается внутри обработчика этого исключения.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>биты 12-11:</nobr>
+                        </b></td>
+                        <td>Зарезервированы. Должны быть 0.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 10:</nobr>
+                        </b></td>
+                        <td>Зарезервирован. Должен быть 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 9:</nobr>
+                        </b></td>
+                        <td>Флаг точного обнаружения инструкции в глобальной точке останова GE. Начиная с Pentium Pro не
+                            поддерживается. Должен быть 1.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 8:</nobr>
+                        </b></td>
+                        <td>Флаг точного обнаружения инструкции в локальной точке останова LE. Начиная с Pentium Pro не
+                            поддерживается. Должен быть 1.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 7:</nobr>
+                        </b></td>
+                        <td>Флаг включения глобальной точки останова 3. Действует на все задачи и не сбрасывается при
+                            переключении задач.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 6:</nobr>
+                        </b></td>
+                        <td>Флаг включения локальной точки останова 3. Действует только на текущую задачу и сбрасывается
+                            при переключении на другую задачу.
+                        </td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 5:</nobr>
+                        </b></td>
+                        <td>Флаг включения глобальной точки останова 2.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 4:</nobr>
+                        </b></td>
+                        <td>Флаг включения локальной точки останова 2.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 3:</nobr>
+                        </b></td>
+                        <td>Флаг включения глобальной точки останова 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 2:</nobr>
+                        </b></td>
+                        <td>Флаг включения локальной точки останова 1.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 1:</nobr>
+                        </b></td>
+                        <td>Флаг включения глобальной точки останова 0.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td><b>
+                            <nobr>бит 0:</nobr>
+                        </b></td>
+                        <td>Флаг включения локальной точки останова 0.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p><span style="font-size:18px;"><a id="mmx" name="mmx"></a>Регистры MMX</span></p>
+
+                <p>Регистры MMX - это восемь 64-разрядных регистров MM0-MM7. Однако, физически никаких новых регистров с
+                    введением ММХ не появилось &mdash; ММ0 &ndash; ММ7 &mdash; это в точности мантиссы восьми регистров
+                    FPU, от R0 до R7. При записи числа в регистр ММХ оно появляется в битах 63 &ndash; 0
+                    соответствующего регистра FPU, а экспонента (биты 78 &ndash; 64) и ее знаковый бит (бит 79)
+                    заполняются единицами. Запись числа в регистр FPU также приводит к изменению соответствующего
+                    регистра ММХ. Таким образом, нельзя одновременно пользоваться командами для работы с числами с
+                    плавающей запятой и командами ММХ, а если это необходимо &mdash; следует пользоваться командами
+                    FSAVE/FRSTQR,каждый раз перед переходом от использования FPU к ММХ и обратно (эти команды сохраняют
+                    состояние регистров ММХ точно так же, как и FPU).</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

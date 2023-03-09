@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды MUL и IMUL - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body>
+<main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды MUL и IMUL</h1>
+                </div>
+                <div class='post-info'>
+                    <div class='pull-left post-info-time'>
+                        Опубликовано: 30.04.2017
+                    </div>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды MUL и IMUL позволяют перемножать два числа. Команда IMUL используется для перемножения чисел
+                    со знаком, а команда MUL - для чисел без знака.</p>
+                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда IMUL (форма 1)</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">IMUL op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Умножение со знаком</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаги CF и OF сбрасываются в 0, если размер результата умножения получился
+                            меньше или равным размеру заданного операнда. В противном случае эти флаги становятся
+                            равными 1.<br/>
+                            Значения флагов SF, ZF, AF и PF не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Если размерность операнда составляет 8 бит, то команда IMUL производит
+                            умножение содержимого регистра AL на значение операнда и помещает результат в регистр
+                            AX.<br/>
+                            Если операнд - 16-битное слово, команда IMUL производит умножение содержимого регистра AX на
+                            значение операнда и помещает результат в пару регистров DX:AX.<br/>
+                            Если операнд - двойное слово, команда IMUL производит умножение содержимого регистра EAX на
+                            значение операнда и помещает результат в пару регистров EDX:EAX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	al,5
+mov	bl,3
+imul	bl	;AX=000Fh
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда IMUL (форма 2)</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">IMUL op1,op2,op3</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r16, r32<br/>
+                            <b class="ops">op2</b> - r/m16, r/m32<br/>
+                            <b class="ops">op3</b> - i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Умножение со знаком</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Флаги CF и OF устанавливается в 1, если результат умножения не вместился в регистр
+                            назначения (первый операнд). В противном случае эти флаги сбрасываются в 0.<br/>
+                            Значения флагов SF, ZF, AF и PF не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда выполняет умножение второго операнда на третий операнд и помещает
+                            результат в первый операнд.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Разрядность операндов должна совпадать. Исключением является использование в качестве
+                            второго операнда непосредственного 8-битного значения.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+imul	dx,cx,-45
+imul	ax,[bx],3
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда IMUL (форма 3)</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">IMUL op1,op2</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r16, r32<br/>
+                            <b class="ops">op2</b> - r/m16, r/m32, i8, i16, i32
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Умножение со знаком</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаги CF и OF устанавливается в 1, если результат умножения не вместился в
+                            регистр назначения (первый операнд). В противном случае эти флаги сбрасываются в 0.<br/>
+                            Значения флагов SF, ZF, AF и PF не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда выполняет умножение первого операнда на второй операнд и помещает
+                            результат в первый операнд.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td class="just">Разрядность операндов должна совпадать. Исключением является использование в
+                            качестве второго операнда непосредственного 8-битного значения.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+imul	dx,cx
+imul	ebx,334
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда MUL</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">MUL op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m8, r/m16, r/m32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Умножение без знака</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаги CF и OF сбрасываются в 0, если старшая половина результата равна 0. В
+                            противном случае эти флаги устанавливаются в 1.<br/>
+                            Значения флагов SF, ZF, AF и PF не определены.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Если размерность операнда составляет 8 бит, то команда MUL производит
+                            беззнаковое умножение содержимого регистра AL на значение операнда и помещает результат в
+                            регистр AX.<br/>
+                            Если операнд - 16-битное слово, команда MUL производит беззнаковое умножение содержимого
+                            регистра AX на значение операнда и помещает результат в пару регистров DX:AX.<br/>
+                            Если операнд - двойное слово, команда MUL производит беззнаковое умножение содержимого
+                            регистра EAX на значение операнда и помещает результат в пару регистров EDX:EAX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	al,45
+mov	bl,3
+mul	bl	;AX=0087h
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>
+        </div>
+    </div>
+    <div class="right-block">
+        <div class="social-block-right">
+
+        </div>
+
+    </div>
+    <div id='cat-menu-block'>
+
+    </div>
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды CLI, STI - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды CLI, STI</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды CLI и STI служат для установки или сброса флага прерываний, что позволяет включать или
+                    отключать реакцию на внешние прерывания. Команда CLI (Clear Interrupt flag) сбрасывает флаг IF в
+                    значение 0, что запрещает прерывания. Команда STI (Set Interrupt flag) устанавливает флаг IF в
+                    значение 1, что разрешает прерывания.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда CLI</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">CLI</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сброс флага прерывания</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Сбрасывается флаг IF</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда CLI очищает флаг IF. На другие флаги или регистры она не влияет.
+                            Внешние прерывания не распознаются в конце команды CLI и начиная с этого момента до
+                            установки флага прерываний.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+cli
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда STI</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">STI</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Установка флага прерывания</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Устанавливается флаг IF</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда STI устанавливает флаг IF. После выполнения следующей команды
+                            процессор может реагировать на внешние прерывания, если эта следующая команда оставляет флаг
+                            IF в состоянии, разрешающем прерывания.<br/>
+                            Если внешние прерывания запрещены и после команды STI была использована команда RET
+                            (например в конце подпрограммы), то команда RET будет выполнена до того, как начнут
+                            распознаваться внешние прерывания.<br/>
+                            Также, если внешние прерывания запрещены и была использована команда STI, а за ней команда
+                            CLI, то внешние прерывания не будут распознаваться, поскольку команда CLI очищает флаг IF во
+                            время своего выполнения.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+sti
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

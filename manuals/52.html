@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды REP, REPE, REPNE, REPNZ, REPZ - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды REP, REPE, REPNE, REPNZ, REPZ</h1>
+                </div>
+
+                <div class='post-tags'>
+                </div>
+            </div>
+            <div class='post-content'>
+                <p>Команды REP, REPE, REPNE, REPNZ, REPZ - на самом деле это префиксы к командам, работающим со
+                    строками, такими как MOVSB, SCSB и т.п. Эти префиксы позволяют организовывать циклы без
+                    использования команды LOOP.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Префиксы REP, REPE, REPZ</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">REP</b><br/>
+                            <b class="spec">REPE</b><br/>
+                            <b class="spec">REPZ</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Префикс повторения команды</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Все эти три префикса являются синонимами и имеют один и тот же код операции.
+                            Префиксы повторяют выполнение следующей за ними команды, работающей со строками. Количество
+                            повторений заносится в регистр CX до выполнения команды с префиксом. После каждого
+                            повторения команды регистр CX уменьшается на 1 и, если он стал равен нулю или в результате
+                            выполнения команды флаг ZF стал равен 0, происходит выход из цикла.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то в качестве счетчика
+                            используется регистр ECX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	si,offset str1
+mov	di,offset str2
+mov	cx,40
+rep	movsb	;Перенос 40 байт из str1 в str2
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Префиксы REPNE, REPNZ</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">REPNE</b><br/>
+                            <b class="spec">REPNZ</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Префикс повторения команды</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>8086+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Эти два префикса являются синонимами и имеют один и тот же код операции.
+                            Префиксы повторяют выполнение следующей за ними команды, работающей со строками. Количество
+                            повторений заносится в регистр CX до выполнения команды с префиксом. После каждого
+                            повторения команды регистр CX уменьшается на 1 и, если он стал равен нулю или в результате
+                            выполнения команды флаг ZF стал равен 1, происходит выход из цикла.<br/>
+                            Если команда используется в 32-разрядном режиме адресации, то в качестве счетчика
+                            используется регистр ECX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	di,offset str1
+mov	al,13
+mov	cx,40
+repne	scasb	;Поиск символа в строке
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

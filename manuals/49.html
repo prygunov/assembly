@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды PUSHA, PUSHAD, POPA, POPAD - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды PUSHA, PUSHAD, POPA, POPAD</h1>
+                </div>                <div class='post-info'>
+
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды PUSHA, PUSHAD, POPA, POPAD используются для сохранения в стеке и извлечения из него всех
+                    регистров общего назначения. Может использоваться перед вызовом процедуры, чтобы восстановить все
+                    значения регистров, какими они были до вызова.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команды PUSHA, PUSHAD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">PUSHA</b><br/>
+                            <b class="spec">PUSHAD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Помещение регистров общего назначения в стек</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+<br/>
+                            80386+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда PUSHA помещает в стек регистры общего назначения в следующем
+                            порядке: AX, CX, DX, BX, SP, BP, SI, DI (в случае регистра SP используется значение, которое
+                            находилось в этом регистре до начала работы команды).<br/>
+                            Если команда используется в 32-разрядном режиме адресации или указана команда PUSHAD, то в
+                            стеке будут сохраняться регистры EAX, ECX, EDX, EBX, ESP, EBP, ESI, EDI.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+pusha
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда POPA, POPAD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">POPA</b><br/>
+                            <b class="spec">POPAD</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Извлечение регистров общего назначения из стека</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80186+<br/>
+                            80386+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда POP извлекает из стека содержимое регистров общего назначения в
+                            следующем порядке: DI, SI, BP, +2, BX, DX, CX, AX. Регистр SP, при чтении из стека с помощью
+                            команды POPA, пропускается. Вместо этого регистр стека просто увеличивается на 2 и
+                            происходит чтение следующего регистра.<br/>
+                            Если команда используется в 32-разрядном режиме адресации или указана команда POPAD, то из
+                            стека будут извлекаться регистры EDI, ESI, EBP, +4, EBX, EDX, ECX, EAX.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+popa
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

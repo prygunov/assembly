@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команда BSWAP - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команда BSWAP</h1>
+                </div>                <div class='post-info'>
+                    <div class='pull-left post-info-time'>
+                        Опубликовано: 25.04.2017
+                    </div>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команда BSWAP (Byte Swap) меняет порядок байт в 32-битном регистре на противоположный. Используется
+                    для перекодировки из формата представления чисел little-endian в формат big-endian и наоборот.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда BSWAP</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">BSWAP op1</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r32</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Изменение последовательности байтов</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80486+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td>Не изменяются</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда BSWAP реверсирует последовательность байт в 32-разрядном регистре.
+                            После выполнения команды первый байт регистра поменяется местами с последним, второй - с
+                            предпоследним и т.д.<br/>
+                            Возможен вариант использования этой команды с 16-разрядным регистром. В этом случае
+                            результат останется в регистре назначения без изменений.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Нет</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	edx,01020304h
+bswap	edx	;EDX=04030201
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>

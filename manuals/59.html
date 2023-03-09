@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <title>Команды SHLD и SHRD - </title>    <!-- Fonts -->
+<link href="https://fonts.gstatic.com/" rel="dns-prefetch">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed|Oswald|Rubik" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../css/main.css" rel="stylesheet"></head>
+<body><main>
+
+    <div class='content-block'>
+
+        <div class='post'>
+            <div class='post-header'>
+                <div class='post-title'>
+                    <h1>Команды SHLD и SHRD</h1>
+                </div>
+
+            </div>
+            <div class='post-content'>
+                <p>Команды SHLD и SHRD выполняют побитовый сдвиг чисел вправо или влево. Принцип работы команд
+                    аналогичен командам SHL и SHR, однако в этих командах производится сдвиг чисел, состоящих из двух
+                    частей - старшей и младшей. Таким образом эти команды позволяют производить операции сдвига с
+                    64-разрядными числами.</p>                <p>&nbsp;</p>
+
+                <h5><strong><i>Команда SHLD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SHLD op1,op2,op3</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r16, r32<br/>
+                            <b class="ops">op3</b> - i8, CL
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сдвиг влево двойной точности</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаг OF изменяется только в случае сдвига на 1 бит - он устанавливается, если
+                            изменилось значение старшего бита, и сбрасывается, если старший бит не изменился. Для
+                            сдвигов на несколько бит, флаг OF неопределен.<br/>
+                            Флаг CF становится равным старшему биту операнда до выполнения сдвига.<br/>
+                            Флаги ZF, PF, SF устанавливаются в соответствии с результатом. Значение флага AF не
+                            определено.<br/>
+                            Если счетчик сдвига равен 0, то флаги не изменяются.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SHLD выполняет побитовый сдвиг первого операнда влево. Старший бит
+                            операнда помещается во флаг CF. Все биты операнда сдвигаются влево на место старших битов. В
+                            младший бит заносятся значения битов из второго операнда, который остается неизменным.
+                            Величина сдвига определяется вторым операндом<br/>
+                            <img src="../uploads/shld.gif"/><br/>
+                            У второго операнда учитываются только пять младших бит (значения от 0 до 31).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Первый и второй операнд должны совпадать по разрядности.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	cx,03E2h
+shld	ax,cx,4
+jc	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h5><strong><i>Команда SHRD</i></strong></h5>
+
+                <table border="0" cellpadding="5" class="source" style="border: solid 1 gray;" width="100%">
+                    <tbody>
+                    <tr>
+                        <td valign="top" width="15%">Синтаксис:</td>
+                        <td><b class="spec">SHRD op1,op2,op3</b></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Операнды:</td>
+                        <td><b class="ops">op1</b> - r/m16, r/m32<br/>
+                            <b class="ops">op2</b> - r16, r32<br/>
+                            <b class="ops">op3</b> - i8, CL
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Назначение:</td>
+                        <td>Сдвиг вправо двойной точности</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Процессор:</td>
+                        <td>80386+</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Флаги:</td>
+                        <td class="just">Флаг OF изменяется только в случае сдвига на 1 бит - он устанавливается, если
+                            изменилось значение старшего бита, и сбрасывается, если старший бит не изменился. Для
+                            сдвигов на несколько бит, флаг OF неопределен.<br/>
+                            Флаг CF становится равным старшему биту операнда до выполнения сдвига.<br/>
+                            Флаги ZF, PF, SF устанавливаются в соответствии с результатом. Значение флага AF не
+                            определено.<br/>
+                            Если счетчик сдвига равен 0, то флаги не изменяются.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Комментарий:</td>
+                        <td class="comment">Команда SHRD выполняет побитовый сдвиг первого операнда вправо. Младший бит
+                            операнда помещается во флаг CF. Все биты операнда сдвигаются вправо на место младших битов.
+                            В Старший бит заносятся значения битов из второго операнда, который остается неизменным.
+                            Величина сдвига определяется вторым операндом<br/>
+                            <img src="../uploads/shrd.gif"/><br/>
+                            У второго операнда учитываются только пять младших бит (значения от 0 до 31).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Ограничения:</td>
+                        <td>Первый и второй операнд должны совпадать по разрядности.</td>
+                    </tr>
+                    <tr>
+                        <td valign="top">Примеры:</td>
+                        <td class="sample">
+			<pre>
+mov	cx,03E2h
+shrd	ax,cx,4
+jc	l1
+</pre>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>&nbsp;</p>
+
+                <p>&nbsp;</p>
+            </div>
+
+            <hr>        </div>
+    </div>
+
+</main>
+
+</div>
+<div id="upbutton"></div>
+
+</body>
+</html>
